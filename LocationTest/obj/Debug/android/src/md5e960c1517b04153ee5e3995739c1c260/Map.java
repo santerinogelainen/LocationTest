@@ -11,6 +11,8 @@ public class Map
 	public static final String __md_methods;
 	static {
 		__md_methods = 
+			"n_getView:()Landroid/view/View;:GetGetViewHandler\n" +
+			"n_onCreateView:(Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Landroid/os/Bundle;)Landroid/view/View;:GetOnCreateView_Landroid_view_LayoutInflater_Landroid_view_ViewGroup_Landroid_os_Bundle_Handler\n" +
 			"n_onViewCreated:(Landroid/view/View;Landroid/os/Bundle;)V:GetOnViewCreated_Landroid_view_View_Landroid_os_Bundle_Handler\n" +
 			"n_onMapReady:(Lcom/google/android/gms/maps/GoogleMap;)V:GetOnMapReady_Lcom_google_android_gms_maps_GoogleMap_Handler:Android.Gms.Maps.IOnMapReadyCallbackInvoker, Xamarin.GooglePlayServices.Maps\n" +
 			"";
@@ -31,6 +33,22 @@ public class Map
 		if (getClass () == Map.class)
 			mono.android.TypeManager.Activate ("LocationTest.Map, LocationTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Android.Support.V4.App.FragmentActivity, Xamarin.Android.Support.Fragment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null:Android.Gms.Maps.GoogleMapOptions, Xamarin.GooglePlayServices.Maps, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", this, new java.lang.Object[] { p0, p1 });
 	}
+
+
+	public android.view.View getView ()
+	{
+		return n_getView ();
+	}
+
+	private native android.view.View n_getView ();
+
+
+	public android.view.View onCreateView (android.view.LayoutInflater p0, android.view.ViewGroup p1, android.os.Bundle p2)
+	{
+		return n_onCreateView (p0, p1, p2);
+	}
+
+	private native android.view.View n_onCreateView (android.view.LayoutInflater p0, android.view.ViewGroup p1, android.os.Bundle p2);
 
 
 	public void onViewCreated (android.view.View p0, android.os.Bundle p1)

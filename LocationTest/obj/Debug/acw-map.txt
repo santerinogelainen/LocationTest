@@ -10,6 +10,10 @@ LocationTest.Map, LocationTest;md5e960c1517b04153ee5e3995739c1c260.Map
 LocationTest.Map, LocationTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5e960c1517b04153ee5e3995739c1c260.Map
 LocationTest.Map;md5e960c1517b04153ee5e3995739c1c260.Map
 locationtest.Map;md5e960c1517b04153ee5e3995739c1c260.Map
+LocationTest.MapGestureWrapper, LocationTest;md5e960c1517b04153ee5e3995739c1c260.MapGestureWrapper
+LocationTest.MapGestureWrapper, LocationTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5e960c1517b04153ee5e3995739c1c260.MapGestureWrapper
+LocationTest.MapGestureWrapper;md5e960c1517b04153ee5e3995739c1c260.MapGestureWrapper
+locationtest.MapGestureWrapper;md5e960c1517b04153ee5e3995739c1c260.MapGestureWrapper
 LocationTest.StartLoadingScreen, LocationTest;md5e960c1517b04153ee5e3995739c1c260.StartLoadingScreen
 LocationTest.StartLoadingScreen, LocationTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5e960c1517b04153ee5e3995739c1c260.StartLoadingScreen
 LocationTest.StartLoadingScreen;md5e960c1517b04153ee5e3995739c1c260.StartLoadingScreen

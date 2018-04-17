@@ -106,9 +106,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers.cs" />
     <Compile Include="LocationProvider.cs" />
     <Compile Include="MapActivity.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="MapGestureWrapper.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,7 +118,6 @@
     <Compile Include="StartLoadingScreen.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">

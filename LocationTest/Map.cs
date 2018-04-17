@@ -18,6 +18,11 @@ namespace LocationTest
     class Map : SupportMapFragment, IOnMapReadyCallback
     {
 
+        public View OriginalView { get; set; }
+        public override View View => OriginalView;
+
+        MapGestureWrapper GestureWrapper { get; set; }
+
         // the map
         GoogleMap GoogleMap { get; set; }
 
@@ -45,6 +50,7 @@ namespace LocationTest
             // start requesting location
             LocationProvider = new LocationProvider(ParentActivity);
             LocationProvider.OnLocationUpdate += OnLocationUpdate;
+            
         }
 
         /// <summary>
@@ -72,6 +78,14 @@ namespace LocationTest
             GetMapAsync(this);
         }
 
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            OriginalView = base.OnCreateView(inflater, container, savedInstanceState);
+            GestureWrapper = new MapGestureWrapper(ParentActivity);
+            GestureWrapper.AddView(OriginalView);
+            return GestureWrapper;
+        }
+
         /// <summary>
         /// Called when the view has been created, use to edit the view's properties
         /// </summary>
@@ -82,6 +96,7 @@ namespace LocationTest
             // set width and height to match parent
             view.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
             view.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
+
         }
 
         /// <summary>
@@ -91,6 +106,7 @@ namespace LocationTest
         public void OnMapReady(GoogleMap map)
         {
             GoogleMap = map;
+            GestureWrapper.Map = GoogleMap;
         }
 
         public void OnLocationUpdate(Location before, Location after)
@@ -101,6 +117,7 @@ namespace LocationTest
             GoogleMap.AnimateCamera(position, null);
             //System.Diagnostics.Debug.WriteLine("longitude: {0}, latitude: {1}", location.Longitude, location.Latitude);
         }
+
 
     }
 }
