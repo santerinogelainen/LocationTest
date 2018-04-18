@@ -78,6 +78,9 @@ namespace LocationTest
             GetMapAsync(this);
         }
 
+        /// <summary>
+        /// What happens when we create the view. Because we need custom controls, we need to wrap the created view in a custom layout that contains all gestures (MapGestureWrapper)
+        /// </summary>
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             OriginalView = base.OnCreateView(inflater, container, savedInstanceState);
@@ -106,6 +109,9 @@ namespace LocationTest
         public void OnMapReady(GoogleMap map)
         {
             GoogleMap = map;
+
+            // gestures
+            GoogleMap.UiSettings.SetAllGesturesEnabled(false);
             GestureWrapper.Map = GoogleMap;
         }
 

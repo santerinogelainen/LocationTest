@@ -30,5 +30,13 @@ namespace LocationTest
             public static readonly LatLng Target = new LatLng(0, 0);
         }
 
+        public static class Gestures
+        {
+            // HIGHER = SLOWER
+            public const int TiltSpeed = 15;
+            // HIGHER = SLOWER
+            public const int BearingSpeed = 10;
+        }
+
     }
 }

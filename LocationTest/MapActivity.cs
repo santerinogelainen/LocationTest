@@ -17,7 +17,6 @@ namespace LocationTest
             .InvokeMapType(Settings.Map.MapType)
             .InvokeMaxZoomPreference(Settings.Map.MaxZoom)
             .InvokeMinZoomPreference(Settings.Map.MinZoom)
-            .InvokeScrollGesturesEnabled(false)
             .InvokeCompassEnabled(false);
 
         protected override void OnCreate(Bundle savedInstanceState)

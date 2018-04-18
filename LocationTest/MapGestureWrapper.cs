@@ -6,6 +6,7 @@ using System.Text;
 using Android.App;
 using Android.Content;
 using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -15,6 +16,9 @@ namespace LocationTest
 {
     public class MapGestureWrapper : FrameLayout
     {
+
+        public float StartBearing { get; set; }
+        public float StartTilt { get; set; }
 
         public Vector2 TouchStart { get; set; }
         public Vector2 TouchEnd { get; set; }
@@ -41,6 +45,8 @@ namespace LocationTest
             {
                 case MotionEventActions.Down:
                     SetVector(TouchStart, e);
+                    StartBearing = Map.CameraPosition.Bearing;
+                    StartTilt = Map.CameraPosition.Tilt;
                     System.Diagnostics.Debug.WriteLine("Start: X: {0}, Y: {1}", TouchStart.X, TouchStart.Y);
                     break;
                 case MotionEventActions.Up:
@@ -51,7 +57,28 @@ namespace LocationTest
                     TouchDelta.X = TouchStart.X - e.GetX();
                     TouchDelta.Y = TouchStart.Y - e.GetY();
                     System.Diagnostics.Debug.WriteLine("Delta: X: {0}, Y: {1}", TouchDelta.X, TouchDelta.Y);
-                    
+
+                    CameraPosition.Builder camera = new CameraPosition.Builder(Map.CameraPosition);
+                    camera.Bearing(StartBearing + TouchDelta.X / Settings.Gestures.BearingSpeed);
+
+                    if (e.PointerCount == 2)
+                    {
+                        float tilt = StartTilt - TouchDelta.Y / Settings.Gestures.TiltSpeed;
+
+                        // do not overflow tilt, min 0 max 90
+                        if (tilt < 0)
+                        {
+                            tilt = 0;
+                        }
+                        if (tilt > 90)
+                        {
+                            tilt = 90;
+                        }
+                        camera.Tilt(tilt);
+                    }
+
+                    Map.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
+
                     break;
             }
             return base.DispatchTouchEvent(e);
