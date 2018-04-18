@@ -61,7 +61,7 @@ namespace LocationTest
                     CameraPosition.Builder camera = new CameraPosition.Builder(Map.CameraPosition);
                     camera.Bearing(StartBearing + TouchDelta.X / Settings.Gestures.BearingSpeed);
 
-                    if (e.PointerCount == 2)
+                    /*if (e.PointerCount == 2)
                     {
                         float tilt = StartTilt - TouchDelta.Y / Settings.Gestures.TiltSpeed;
 
@@ -75,7 +75,7 @@ namespace LocationTest
                             tilt = 90;
                         }
                         camera.Tilt(tilt);
-                    }
+                    }*/
 
                     Map.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
 
