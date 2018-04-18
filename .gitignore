@@ -1,4 +1,4 @@
 .vs
-obj
-bin
-packages
+LocationTest/obj/**
+LocationTest/bin/**
+packages/**
