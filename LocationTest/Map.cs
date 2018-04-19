@@ -3,127 +3,120 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Android.App;
 using Android.Content;
-using Android.Support.V4.App;
 using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
-using Android.Locations;
-using Android.Gms.Maps.Model;
 
 namespace LocationTest
 {
-    class Map : SupportMapFragment, IOnMapReadyCallback
+    /// <summary>
+    /// Represents a map
+    /// 
+    /// This is a wrapper class for MapFragmentView that actually contains the googlemap. This class contains touch events that manipulate the view.
+    /// </summary>
+    public class Map : FrameLayout
     {
 
-        public View OriginalView { get; set; }
-        public override View View => OriginalView;
-
-        MapGestureWrapper GestureWrapper { get; set; }
-
-        // the map
-        GoogleMap GoogleMap { get; set; }
-
-        // the options
-        GoogleMapOptions Options { get; set; }
-
         // the parent activity
-        private FragmentActivity ParentActivity { get; set; }
+        public FragmentActivity Activity { get; set; }
 
-        // the location provider
-        LocationProvider LocationProvider { get; set; }
+        // starting bearing when user touches the screen
+        public float StartBearing { get; set; }
+        public float StartTilt { get; set; }
 
-        /// <summary>
-        /// Create the map
-        /// </summary>
-        /// <param name="parent">The parent activity of this map</param>
-        /// <param name="options">The options for this map</param>
-        public Map(FragmentActivity parent, GoogleMapOptions options) : base(){
-            ParentActivity = parent;
+        // touch positions on start, end and the delta during movement
+        public Vector2 TouchStart { get; set; }
+        public Vector2 TouchEnd { get; set; }
+        public Vector2 TouchDelta { get; set; }
 
-            // set the options and initialize map
-            SetOptions(options);
-            InitMap();
+        // view that contains the googlemap
+        public MapFragmentView MapView { get; set; }
 
-            // start requesting location
-            LocationProvider = new LocationProvider(ParentActivity);
-            LocationProvider.OnLocationUpdate += OnLocationUpdate;
-            
-        }
-
-        /// <summary>
-        /// Se the options for this map
-        /// </summary>
-        /// <param name="options">Google map options</param>
-        public void SetOptions(GoogleMapOptions options)
+        public Map(FragmentActivity container, GoogleMapOptions options) : base(container)
         {
-            Bundle args = new Bundle();
-            args.PutParcelable("MapOptions", options);
-            Arguments = args;
+            InitTouchEvents();
+            Activity = container;
 
-            Options = options;
+            // its important that we generate an id and insert this layout before creating mapfragmentview since mapfragmentview uses that id to generate the google map inside this layout
+            Id = GenerateViewId();
+            Activity.FindViewById<LinearLayout>(Resource.Id.layout).AddView(this);
+
+            MapView = new MapFragmentView(this, options);
         }
 
         /// <summary>
-        /// Initialize the map in the activity
+        /// Initializes the touch events
         /// </summary>
-        public void InitMap()
+        public void InitTouchEvents()
         {
-            FragmentManager manager = ParentActivity.SupportFragmentManager;
-            FragmentTransaction transaction = manager.BeginTransaction();
-            transaction.Add(Resource.Id.layout, this, "map");
-            transaction.Commit();
-            GetMapAsync(this);
+            TouchStart = new Vector2();
+            TouchEnd = new Vector2();
+            TouchDelta = new Vector2();
         }
 
         /// <summary>
-        /// What happens when we create the view. Because we need custom controls, we need to wrap the created view in a custom layout that contains all gestures (MapGestureWrapper)
+        /// Sets a vector's x and y values with motionevent e.GetX or e.GetY 
         /// </summary>
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        /// <param name="vector">vector</param>
+        /// <param name="e">motion event</param>
+        public void SetVector(Vector2 vector, MotionEvent e)
         {
-            OriginalView = base.OnCreateView(inflater, container, savedInstanceState);
-            GestureWrapper = new MapGestureWrapper(ParentActivity);
-            GestureWrapper.AddView(OriginalView);
-            return GestureWrapper;
+            vector.X = e.GetX();
+            vector.Y = e.GetY();
         }
 
-        /// <summary>
-        /// Called when the view has been created, use to edit the view's properties
-        /// </summary>
-        /// <param name="view">The view</param>
-        /// <param name="savedInstanceState"></param>
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        public override bool DispatchTouchEvent(MotionEvent e)
         {
-            // set width and height to match parent
-            view.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
-            view.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
+            switch (e.Action)
+            {
+                // on first touch, set the touchstart location
+                case MotionEventActions.Down:
+                    SetVector(TouchStart, e);
+                    StartBearing = MapView.GoogleMap.CameraPosition.Bearing;
+                    StartTilt = MapView.GoogleMap.CameraPosition.Tilt;
+                    System.Diagnostics.Debug.WriteLine("Start: X: {0}, Y: {1}", TouchStart.X, TouchStart.Y);
+                    break;
+                // on touch up, set the touch end location
+                case MotionEventActions.Up:
+                    SetVector(TouchEnd, e);
+                    System.Diagnostics.Debug.WriteLine("End: X: {0}, Y: {1}", TouchEnd.X, TouchEnd.Y);
+                    break;
+                // when we move update the delta position with the starting position and current position
+                case MotionEventActions.Move:
+                    TouchDelta.X = TouchStart.X - e.GetX();
+                    TouchDelta.Y = TouchStart.Y - e.GetY();
+                    System.Diagnostics.Debug.WriteLine("Delta: X: {0}, Y: {1}", TouchDelta.X, TouchDelta.Y);
 
+                    CameraPosition.Builder camera = new CameraPosition.Builder(MapView.GoogleMap.CameraPosition);
+                    camera.Bearing(StartBearing + TouchDelta.X / Settings.Gestures.BearingSpeed);
+
+                    /*if (e.PointerCount == 2)
+                    {
+                        float tilt = StartTilt - TouchDelta.Y / Settings.Gestures.TiltSpeed;
+
+                        // do not overflow tilt, min 0 max 90
+                        if (tilt < 0)
+                        {
+                            tilt = 0;
+                        }
+                        if (tilt > 90)
+                        {
+                            tilt = 90;
+                        }
+                        camera.Tilt(tilt);
+                    }*/
+
+                    MapView.GoogleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
+
+                    break;
+            }
+            return base.DispatchTouchEvent(e);
         }
-
-        /// <summary>
-        /// Called when the map is ready
-        /// </summary>
-        /// <param name="map">The map</param>
-        public void OnMapReady(GoogleMap map)
-        {
-            GoogleMap = map;
-
-            // gestures
-            GoogleMap.UiSettings.SetAllGesturesEnabled(false);
-            GestureWrapper.Map = GoogleMap;
-        }
-
-        public void OnLocationUpdate(Location before, Location after)
-        {
-            LatLng ln = new LatLng(after.Latitude, after.Longitude);
-
-            CameraUpdate position = CameraUpdateFactory.NewLatLng(ln);
-            GoogleMap.AnimateCamera(position, null);
-            //System.Diagnostics.Debug.WriteLine("longitude: {0}, latitude: {1}", location.Longitude, location.Latitude);
-        }
-
-
     }
 }

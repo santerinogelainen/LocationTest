@@ -19,7 +19,7 @@ namespace LocationTest
     /// <summary>
     /// Provides the location and location updates
     /// </summary>
-    class LocationProvider : LocationCallback
+    public class LocationProvider : LocationCallback
     {
 
         const int UPDATE_INTERVAL = 4000;
