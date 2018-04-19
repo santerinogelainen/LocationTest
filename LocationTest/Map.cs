@@ -18,7 +18,7 @@ namespace LocationTest
     /// <summary>
     /// Represents a map
     /// 
-    /// This is a wrapper class for MapFragmentView that actually contains the googlemap. This class contains touch events that manipulate the view.
+    /// This is a wrapper class for GoogleMapView that actually contains the googlemap. This class contains touch events that manipulate the view.
     /// </summary>
     public class Map : FrameLayout
     {
@@ -36,18 +36,18 @@ namespace LocationTest
         public Vector2 TouchDelta { get; set; }
 
         // view that contains the googlemap
-        public MapFragmentView MapView { get; set; }
+        public GoogleMapView MapView { get; set; }
 
         public Map(FragmentActivity container, GoogleMapOptions options) : base(container)
         {
             InitTouchEvents();
             Activity = container;
 
-            // its important that we generate an id and insert this layout before creating mapfragmentview since mapfragmentview uses that id to generate the google map inside this layout
+            // its important that we generate an id and insert this layout before creating GoogleMapView since GoogleMapView uses that id to generate the google map inside this layout
             Id = GenerateViewId();
             Activity.FindViewById<LinearLayout>(Resource.Id.layout).AddView(this);
 
-            MapView = new MapFragmentView(this, options);
+            MapView = new GoogleMapView(this, options);
         }
 
         /// <summary>

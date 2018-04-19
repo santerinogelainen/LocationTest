@@ -18,7 +18,7 @@ namespace LocationTest
     /// <summary>
     /// Represents the googlemap part of the map. Cannot contain any custom openGL graphics, just the googlemap
     /// </summary>
-    public class MapFragmentView : SupportMapFragment, IOnMapReadyCallback
+    public class GoogleMapView : SupportMapFragment, IOnMapReadyCallback
     {
 
         // the google map
@@ -27,21 +27,21 @@ namespace LocationTest
         // the options
         public GoogleMapOptions Options { get; set; }
 
-        // the map that contains this mapfragmentview
+        // the map that contains this GoogleMapView
         public Map Parent { get; set; }
 
         // the location provider
         public LocationProvider LocationProvider { get; set; }
 
         /// <summary>
-        /// Create the mapfragmentview
+        /// Create the GoogleMapView
         /// </summary>
-        /// <param name="parent">The parent map of this mapfragmentview</param>
-        /// <param name="options">The options for this mapfragmentview</param>
-        public MapFragmentView(Map parent, GoogleMapOptions options) : base(){
+        /// <param name="parent">The parent map of this GoogleMapView</param>
+        /// <param name="options">The options for this GoogleMapView</param>
+        public GoogleMapView(Map parent, GoogleMapOptions options) : base(){
             Parent = parent;
 
-            // set the options and initialize mapfragmentview
+            // set the options and initialize GoogleMapView
             SetOptions(options);
             InitMap();
 
@@ -52,7 +52,7 @@ namespace LocationTest
         }
 
         /// <summary>
-        /// Se the options for this mapfragmentview
+        /// Se the options for this GoogleMapView
         /// </summary>
         /// <param name="options">Google map options</param>
         public void SetOptions(GoogleMapOptions options)
@@ -65,7 +65,7 @@ namespace LocationTest
         }
 
         /// <summary>
-        /// Initialize the mapfragmentview in the parent map layout
+        /// Initialize the GoogleMapView in the parent map layout
         /// </summary>
         public void InitMap()
         {

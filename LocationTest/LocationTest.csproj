@@ -109,7 +109,7 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="LocationProvider.cs" />
     <Compile Include="MapActivity.cs" />
-    <Compile Include="MapFragmentView.cs" />
+    <Compile Include="GoogleMapView.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
