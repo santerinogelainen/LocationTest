@@ -5,8 +5,6 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
-using Android.Graphics;
-using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -14,16 +12,21 @@ using Android.Widget;
 
 namespace LocationTest
 {
-    public class Character : ImageView
+    public class UpgradeMenuButton : MenuButton
     {
 
-        public Character(Activity parent) : base(parent)
+        Activity Activity { get; set; }
+
+        public UpgradeMenuButton(Activity parent) : base(parent)
         {
+            Activity = parent;
             BitmapImage bmp = new BitmapImage(Resource.Drawable.placeholder);
             SetImageDrawable(bmp);
-            FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(100, 100);
-            param.Gravity = GravityFlags.Center;
-            LayoutParameters = param;
+        }
+        
+        public override void OnClick(View v)
+        {
+            Toast.MakeText(Activity, "click", ToastLength.Long).Show();
         }
 
     }

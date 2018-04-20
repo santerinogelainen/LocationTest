@@ -106,6 +106,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitmapImage.cs" />
+    <Compile Include="MenuButton.cs" />
+    <Compile Include="UpgradeMenu.cs" />
+    <Compile Include="UpgradeMenuButton.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="LocationProvider.cs" />

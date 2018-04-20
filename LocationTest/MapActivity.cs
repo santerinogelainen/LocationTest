@@ -15,6 +15,8 @@ namespace LocationTest
 
         Map Map { get; set; }
         Character Character { get; set; }
+        UpgradeMenuButton UpgradeMenuButton { get; set; }
+        UpgradeMenu UpgradeMenu { get; set; }
 
         ViewGroup Layout { get; set; }
 
@@ -40,6 +42,11 @@ namespace LocationTest
             Character = new Character(this);
             Layout.AddView(Character);
 
+            UpgradeMenuButton = new UpgradeMenuButton(this);
+            Layout.AddView(UpgradeMenuButton);
+
+            UpgradeMenu = new UpgradeMenu(this);
+            Layout.AddView(UpgradeMenu);
         }
 
         public bool IsGooglePlayServicesInstalled()
