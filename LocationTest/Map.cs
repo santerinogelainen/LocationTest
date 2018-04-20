@@ -26,12 +26,15 @@ namespace LocationTest
         // the parent activity
         public FragmentActivity Activity { get; set; }
 
+        public Vector2 CenterPoint { get; set; }
+
         // starting bearing when user touches the screen
         public float StartBearing { get; set; }
         public float StartTilt { get; set; }
 
         // touch positions on start, end and the delta during movement
         public Vector2 TouchStart { get; set; }
+        public Vector2 TouchCurrent { get; set; }
         public Vector2 TouchEnd { get; set; }
         public Vector2 TouchDelta { get; set; }
 
@@ -45,9 +48,18 @@ namespace LocationTest
 
             // its important that we generate an id and insert this layout before creating GoogleMapView since GoogleMapView uses that id to generate the google map inside this layout
             Id = GenerateViewId();
+            
             Activity.FindViewById<LinearLayout>(Resource.Id.layout).AddView(this);
 
             MapView = new GoogleMapView(this, options);
+
+            Post(OnViewCreated);
+        }
+
+        public void OnViewCreated()
+        {
+            CenterPoint = new Vector2(Width / 2, Height / 2);
+            //D.WL(CenterPoint, this);
         }
 
         /// <summary>
@@ -58,6 +70,7 @@ namespace LocationTest
             TouchStart = new Vector2();
             TouchEnd = new Vector2();
             TouchDelta = new Vector2();
+            TouchCurrent = new Vector2();
         }
 
         /// <summary>
@@ -80,21 +93,29 @@ namespace LocationTest
                     SetVector(TouchStart, e);
                     StartBearing = MapView.GoogleMap.CameraPosition.Bearing;
                     StartTilt = MapView.GoogleMap.CameraPosition.Tilt;
-                    System.Diagnostics.Debug.WriteLine("Start: X: {0}, Y: {1}", TouchStart.X, TouchStart.Y);
+                    D.WL(String.Format("Start: X: {0}, Y: {1}", TouchStart.X, TouchStart.Y));
                     break;
                 // on touch up, set the touch end location
                 case MotionEventActions.Up:
                     SetVector(TouchEnd, e);
-                    System.Diagnostics.Debug.WriteLine("End: X: {0}, Y: {1}", TouchEnd.X, TouchEnd.Y);
+                    D.WL(String.Format("End: X: {0}, Y: {1}", TouchEnd.X, TouchEnd.Y));
                     break;
                 // when we move update the delta position with the starting position and current position
                 case MotionEventActions.Move:
+                    SetVector(TouchCurrent, e);
                     TouchDelta.X = TouchStart.X - e.GetX();
                     TouchDelta.Y = TouchStart.Y - e.GetY();
-                    System.Diagnostics.Debug.WriteLine("Delta: X: {0}, Y: {1}", TouchDelta.X, TouchDelta.Y);
+                    D.WL(String.Format("Current: X: {0}, Y: {1}", TouchCurrent.X, TouchCurrent.Y));
+                    D.WL(String.Format("Delta: X: {0}, Y: {1}", TouchDelta.X, TouchDelta.Y));
 
                     CameraPosition.Builder camera = new CameraPosition.Builder(MapView.GoogleMap.CameraPosition);
-                    camera.Bearing(StartBearing + TouchDelta.X / Settings.Gestures.BearingSpeed);
+                    if (TouchCurrent.Y > CenterPoint.Y)
+                    {
+                        camera.Bearing(StartBearing - TouchDelta.X / Settings.Gestures.BearingSpeed);
+                    } else
+                    {
+                        camera.Bearing(StartBearing + TouchDelta.X / Settings.Gestures.BearingSpeed);
+                    }
 
                     /*if (e.PointerCount == 2)
                     {
