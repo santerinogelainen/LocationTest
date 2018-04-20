@@ -5,6 +5,7 @@ using Android.Gms.Maps;
 using Android.Gms.Common;
 using Android.Util;
 using Android.Support.V4.App;
+using Android.Views;
 
 namespace LocationTest
 {
@@ -12,7 +13,11 @@ namespace LocationTest
     public class MapActivity : FragmentActivity
     {
 
-        Map map;
+        Map Map { get; set; }
+        Character Character { get; set; }
+
+        ViewGroup Layout { get; set; }
+
         GoogleMapOptions mapOptions = new GoogleMapOptions()
             .InvokeMapType(Settings.Map.MapType)
             .InvokeMaxZoomPreference(Settings.Map.MaxZoom)
@@ -25,10 +30,16 @@ namespace LocationTest
             
             SetContentView(Resource.Layout.MapActivity);
 
+            Layout = FindViewById<ViewGroup>(Resource.Id.layout);
+
             if (IsGooglePlayServicesInstalled())
             {
-                map = new Map(this, mapOptions);
+                Map = new Map(this, mapOptions);
             }
+
+            Character = new Character(this);
+            Layout.AddView(Character);
+
         }
 
         public bool IsGooglePlayServicesInstalled()

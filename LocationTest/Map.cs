@@ -49,7 +49,7 @@ namespace LocationTest
             // its important that we generate an id and insert this layout before creating GoogleMapView since GoogleMapView uses that id to generate the google map inside this layout
             Id = GenerateViewId();
             
-            Activity.FindViewById<LinearLayout>(Resource.Id.layout).AddView(this);
+            Activity.FindViewById<ViewGroup>(Resource.Id.layout).AddView(this);
 
             MapView = new GoogleMapView(this, options);
 
