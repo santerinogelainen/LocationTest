@@ -54,6 +54,7 @@ namespace LocationTest
         public void ResetTouchStart(MotionEvent e)
         {
             SetVector(TouchStart, e);
+            OnTouchStart(e);
         }
 
         /// <summary>
@@ -99,13 +100,12 @@ namespace LocationTest
             {
                 // on first touch, set the touchstart location
                 case MotionEventActions.Down:
-                    SetVector(TouchStart, e);
-                    OnTouchDown(e);
+                    ResetTouchStart(e);
                     break;
                 // on touch up, set the touch end location
                 case MotionEventActions.Up:
                     SetVector(TouchEnd, e);
-                    OnTouchUp(e);
+                    OnTouchEnd(e);
                     break;
                 // when we move update the delta position and current position
                 case MotionEventActions.Move:

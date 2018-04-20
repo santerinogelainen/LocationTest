@@ -63,13 +63,29 @@ namespace LocationTest
         public override void OnTouchMove(MotionEvent e)
         {
             CameraPosition.Builder camera = new CameraPosition.Builder(MapView.GoogleMap.CameraPosition);
+            
+
             if (TouchCurrent.Y > CenterPoint.Y)
             {
-                camera.Bearing(StartBearing - TouchDelta.X / Settings.Gestures.BearingSpeed);
+                // we went over the center point so we want to reset the touch, so that it doesnt bug out
+                if (TouchStart.Y <= CenterPoint.Y)
+                {
+                    ResetTouchStart(e);
+                } else
+                {
+                    camera.Bearing(StartBearing - TouchDelta.X / Settings.Gestures.BearingSpeed);
+                }
             }
             else
             {
-                camera.Bearing(StartBearing + TouchDelta.X / Settings.Gestures.BearingSpeed);
+                // we went over the center point so we want to reset the touch, so that it doesnt bug out
+                if (TouchStart.Y >= CenterPoint.Y)
+                {
+                    ResetTouchStart(e);
+                } else
+                {
+                    camera.Bearing(StartBearing + TouchDelta.X / Settings.Gestures.BearingSpeed);
+                }
             }
 
             MapView.GoogleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
