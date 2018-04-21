@@ -12,7 +12,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace LocationTest
+namespace LocationTest.Support
 {
     public class BitmapImage
     {

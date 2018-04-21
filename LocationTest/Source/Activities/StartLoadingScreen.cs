@@ -10,8 +10,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using LocationTest.Support;
 
-namespace LocationTest
+namespace LocationTest.Activities
 {
     [Activity(Label = "StartLoadingScreen", MainLauncher = true)]
     public class StartLoadingScreen : Activity

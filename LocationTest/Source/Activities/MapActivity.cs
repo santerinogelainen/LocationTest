@@ -6,8 +6,11 @@ using Android.Gms.Common;
 using Android.Util;
 using Android.Support.V4.App;
 using Android.Views;
+using LocationTest.Support;
+using LocationTest.Views.UI;
+using LocationTest.Views.Map;
 
-namespace LocationTest
+namespace LocationTest.Activities
 {
     [Activity(Label = "MapActivity")]
     public class MapActivity : FragmentActivity

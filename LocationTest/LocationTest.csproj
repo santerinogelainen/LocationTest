@@ -106,24 +106,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitmapImage.cs" />
-    <Compile Include="ITouchable.cs" />
-    <Compile Include="MenuButton.cs" />
-    <Compile Include="TouchableButton.cs" />
-    <Compile Include="UpgradeMenu.cs" />
-    <Compile Include="UpgradeMenuButton.cs" />
-    <Compile Include="Character.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="LocationProvider.cs" />
-    <Compile Include="MapActivity.cs" />
-    <Compile Include="GoogleMapView.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="Permission.cs" />
+    <Compile Include="Source\Support\BitmapImage.cs" />
+    <Compile Include="Source\Support\ITouchable.cs" />
+    <Compile Include="Source\Views\Support\MenuButton.cs" />
+    <Compile Include="Source\Views\Support\TouchableButton.cs" />
+    <Compile Include="Source\Views\UI\UpgradeMenu.cs" />
+    <Compile Include="Source\Views\UI\UpgradeMenuButton.cs" />
+    <Compile Include="Source\Views\UI\Character.cs" />
+    <Compile Include="Source\Support\Other.cs" />
+    <Compile Include="Source\Support\LocationProvider.cs" />
+    <Compile Include="Source\Activities\MapActivity.cs" />
+    <Compile Include="Source\Views\Map\GoogleMapView.cs" />
+    <Compile Include="Source\Views\Map\Map.cs" />
+    <Compile Include="Source\Support\Permission.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="StartLoadingScreen.cs" />
-    <Compile Include="TouchableLayout.cs" />
+    <Compile Include="Source\Support\Settings.cs" />
+    <Compile Include="Source\Activities\StartLoadingScreen.cs" />
+    <Compile Include="Source\Views\Support\TouchableLayout.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

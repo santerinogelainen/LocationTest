@@ -12,8 +12,10 @@ using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
+using LocationTest.Views.Support;
+using LocationTest.Support;
 
-namespace LocationTest
+namespace LocationTest.Views.Map
 {
     /// <summary>
     /// Represents a map

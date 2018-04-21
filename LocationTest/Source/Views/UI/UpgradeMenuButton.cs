@@ -10,8 +10,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
+using LocationTest.Views.Support;
+using LocationTest.Support;
 
-namespace LocationTest
+namespace LocationTest.Views.UI
 {
     public class UpgradeMenuButton : MenuButton, ValueAnimator.IAnimatorUpdateListener
     {

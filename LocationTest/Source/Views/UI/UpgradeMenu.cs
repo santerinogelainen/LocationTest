@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Graphics;
 
-namespace LocationTest
+namespace LocationTest.Views.UI
 {
     public class UpgradeMenu : RelativeLayout
     {

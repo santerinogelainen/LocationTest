@@ -9,8 +9,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using LocationTest.Support;
 
-namespace LocationTest
+namespace LocationTest.Views.Support
 {
     /// <summary>
     /// This class represents a layout that can have custom touch events on touch move, up and down

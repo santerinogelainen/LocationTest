@@ -14,7 +14,7 @@ using Android.Support.V4.Content;
 using Android.Content.PM;
 using Android.Support.V4.App;
 
-namespace LocationTest
+namespace LocationTest.Support
 {
     static class PermissionManager
     {

@@ -12,8 +12,9 @@ using Android.Views;
 using Android.Widget;
 using Android.Locations;
 using Android.Gms.Maps.Model;
+using LocationTest.Support;
 
-namespace LocationTest
+namespace LocationTest.Views.Map
 {
     /// <summary>
     /// Represents the googlemap part of the map. Cannot contain any custom openGL graphics, just the googlemap
@@ -31,7 +32,7 @@ namespace LocationTest
         public Map Parent { get; set; }
 
         // the location provider
-        public LocationProvider LocationProvider { get; set; }
+        public LocationTest.Support.LocationProvider LocationProvider { get; set; }
 
         /// <summary>
         /// Create the GoogleMapView
@@ -46,7 +47,7 @@ namespace LocationTest
             InitMap();
 
             // start requesting location
-            LocationProvider = new LocationProvider(Parent.Activity);
+            LocationProvider = new LocationTest.Support.LocationProvider(Parent.Activity);
             LocationProvider.OnLocationUpdate += OnLocationUpdate;
             
         }
