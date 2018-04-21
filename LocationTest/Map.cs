@@ -64,30 +64,105 @@ namespace LocationTest
         {
             CameraPosition.Builder camera = new CameraPosition.Builder(MapView.GoogleMap.CameraPosition);
             
+            // this is a bit complicated
 
+            // if the currect touch position is on the bottom half of the screen
+            // or just below the centerpoint
             if (TouchCurrent.Y > CenterPoint.Y)
             {
-                // we went over the center point so we want to reset the touch, so that it doesnt bug out
+                // If the start position was on the top half of the screen that means we crossed the center point
+                // reset the touch so that the controls dont bug out
                 if (TouchStart.Y <= CenterPoint.Y)
                 {
                     ResetTouchStart(e);
-                } else
-                {
-                    camera.Bearing(StartBearing - TouchDelta.X / Settings.Gestures.BearingSpeed);
+                    return;
                 }
-            }
-            else
-            {
-                // we went over the center point so we want to reset the touch, so that it doesnt bug out
-                if (TouchStart.Y >= CenterPoint.Y)
+								
+								// otherwise we can move the camera most likely
+                float MinusBearing;
+
+								// check if we are on the right half of the screen currently
+								// or on the right side of the center point
+                if (TouchCurrent.X > CenterPoint.X)
+                {
+										// again check if we went over the left and right side of the screen divider by looking at the touch starting position
+										// and reset since it bugs out otherwise
+										if (TouchStart.X <= CenterPoint.X)
+                    {
+                        ResetTouchStart(e);
+												return;
+                    }
+										// calculate the bearing that we subtract from the starting bearing
+                    MinusBearing = ((TouchDelta.X - TouchDelta.Y) / Settings.Gestures.BearingSpeed);
+                }
+								// we are on the left half of the screen currently
+								// or on the left side of the center point
+								else
+                {
+										// again check if we went over the left and right side of the screen divider by looking at the touch starting position
+										// and reset since it bugs out otherwise
+                    if (TouchStart.X >= CenterPoint.X)
+                    {
+                        ResetTouchStart(e);
+												return;
+										}
+										// calculate the bearing that we subtract from the starting bearing
+										MinusBearing = ((TouchDelta.X + TouchDelta.Y) / Settings.Gestures.BearingSpeed);
+                }
+
+								// set the camera bearing
+								camera.Bearing(StartBearing - MinusBearing);
+						}
+
+						// if the currect touch position is on the top half of the screen
+						// or just above the centerpoint
+						else
+						{
+								// If the start position was on the top half of the screen that means we crossed the center point
+								// reset the touch so that the controls dont bug out
+								if (TouchStart.Y >= CenterPoint.Y)
                 {
                     ResetTouchStart(e);
-                } else
-                {
-                    camera.Bearing(StartBearing + TouchDelta.X / Settings.Gestures.BearingSpeed);
+										return;
                 }
-            }
 
+								// otherwise we can move the camera most likely
+								float PlusBearing;
+
+								// check if we are on the right half of the screen currently
+								// or on the right side of the center point
+								if (TouchCurrent.X > CenterPoint.X)
+                {
+										// again check if we went over the left and right side of the screen divider by looking at the touch starting position
+										// and reset since it bugs out otherwise
+										if (TouchStart.X <= CenterPoint.X)
+                    {
+                        ResetTouchStart(e);
+												return;
+                    }
+										// calculate the bearing that we subtract from the starting bearing
+										PlusBearing = ((TouchDelta.X + TouchDelta.Y) / Settings.Gestures.BearingSpeed);
+                }
+								// we are on the left half of the screen currently
+								// or on the left side of the center point
+								else
+								{
+										// again check if we went over the left and right side of the screen divider by looking at the touch starting position
+										// and reset since it bugs out otherwise
+										if (TouchStart.X >= CenterPoint.X)
+                    {
+                        ResetTouchStart(e);
+												return;
+                    }
+										// calculate the bearing that we subtract from the starting bearing
+										PlusBearing = ((TouchDelta.X - TouchDelta.Y) / Settings.Gestures.BearingSpeed);
+                }
+
+								// set the camera bearing
+								camera.Bearing(StartBearing + PlusBearing);
+						}
+
+						// finally set the camera of the google map
             MapView.GoogleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
         }
 
