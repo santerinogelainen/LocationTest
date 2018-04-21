@@ -17,7 +17,7 @@ namespace LocationTest.Views.Support
 		/// This class represents a layout that can have custom touch events on touch move, up and down
 		/// This is a subclass of framelayout
 		/// </summary>
-		public class TouchableButton : Button, ITouchable
+		public class TouchableImageButton : ImageButton, ITouchable
 		{
 
 				// touch positions on start, end and the delta during movement
@@ -31,7 +31,7 @@ namespace LocationTest.Views.Support
 				/// This is a subclass of framelayout
 				/// </summary>
 				/// <param name="c">context</param>
-				public TouchableButton(Context c) : base(c)
+				public TouchableImageButton(Context c) : base(c)
 				{
 						InitTouchEvents();
 				}

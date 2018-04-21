@@ -5,33 +5,33 @@ using System.Text;
 using Android.Animation;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Android.Views.Animations;
 using Android.Widget;
 using LocationTest.Views.Support;
-using LocationTest.Support;
 
 namespace LocationTest.Views.UI
 {
-    public class UpgradeMenuButton : MenuButton, ValueAnimator.IAnimatorUpdateListener
-    {
-				
+		public class UpgradeMenuClose : TouchableButton, ValueAnimator.IAnimatorUpdateListener
+		{
 				UpgradeMenu Menu { get; set; }
 				ValueAnimator ShowUpgradeMenuAnimation { get; set; }
 
-				public UpgradeMenuButton(Activity parent, UpgradeMenu menu) : base(parent)
-        {
+				public UpgradeMenuClose(Activity parent, UpgradeMenu menu) : base(parent)
+				{
 						Menu = menu;
+						Text = "Close";
+						SetTextColor(Color.Blue);
+						SetBackgroundColor(Color.Transparent);
+						SetPadding(0, 0, 0, 0);
+						LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, 150);
+				}
 
-            BitmapImage bmp = new BitmapImage(Resource.Drawable.placeholder);
-            SetImageDrawable(bmp);
-        }
-
-        public override void OnTouchStart(MotionEvent e)
-        {
-						ShowUpgradeMenuAnimation = ValueAnimator.OfInt(Menu.MeasuredHeight, 0);
+				public override void OnTouchStart(MotionEvent e)
+				{
+						ShowUpgradeMenuAnimation = ValueAnimator.OfInt(0, Menu.MeasuredHeight);
 						ShowUpgradeMenuAnimation.AddUpdateListener(this);
 						ShowUpgradeMenuAnimation.SetDuration(500);
 						ShowUpgradeMenuAnimation.Start();
@@ -41,5 +41,6 @@ namespace LocationTest.Views.UI
 				{
 						Menu.Top = (int)animation.AnimatedValue;
 				}
+
 		}
 }

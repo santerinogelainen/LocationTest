@@ -110,6 +110,7 @@
     <Compile Include="Source\Support\ITouchable.cs" />
     <Compile Include="Source\Views\Support\MenuButton.cs" />
     <Compile Include="Source\Views\Support\TouchableButton.cs" />
+    <Compile Include="Source\Views\Support\TouchableImageButton.cs" />
     <Compile Include="Source\Views\UI\UpgradeMenu.cs" />
     <Compile Include="Source\Views\UI\UpgradeMenuButton.cs" />
     <Compile Include="Source\Views\UI\Character.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Source\Support\Settings.cs" />
     <Compile Include="Source\Activities\StartLoadingScreen.cs" />
     <Compile Include="Source\Views\Support\TouchableLayout.cs" />
+    <Compile Include="Source\Views\UI\UpgradeMenuClose.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

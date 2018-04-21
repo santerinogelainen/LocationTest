@@ -18,6 +18,8 @@ namespace LocationTest.Views.UI
 
         public UpgradeMenu(Activity parent) : base(parent)
         {
+						AddView(new UpgradeMenuClose(parent, this));
+
             LayoutParameters = new RelativeLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
             SetBackgroundColor(Color.White);
             Post(OnViewCreated);

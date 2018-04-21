@@ -49,10 +49,10 @@ namespace LocationTest.Activities
             Layout.AddView(Character);
 
 						UpgradeMenu = new UpgradeMenu(this);
-						Layout.AddView(UpgradeMenu);
 						UpgradeMenuButton = new UpgradeMenuButton(this, UpgradeMenu);
 						Layout.AddView(UpgradeMenuButton);
-        }
+						Layout.AddView(UpgradeMenu);
+				}
 
         public bool IsGooglePlayServicesInstalled()
         {

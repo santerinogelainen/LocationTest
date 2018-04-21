@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace LocationTest.Views.Support
 {
-    public class MenuButton : TouchableButton
+    public class MenuButton : TouchableImageButton
     {
 
 				public MenuButton(Context context) : base(context)
