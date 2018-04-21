@@ -13,6 +13,9 @@ namespace LocationTest
     public class MapActivity : FragmentActivity
     {
 
+				public int Width { get; set; }
+				public int Height { get; set; }
+
         Map Map { get; set; }
         Character Character { get; set; }
         UpgradeMenuButton UpgradeMenuButton { get; set; }
@@ -42,11 +45,10 @@ namespace LocationTest
             Character = new Character(this);
             Layout.AddView(Character);
 
-            UpgradeMenuButton = new UpgradeMenuButton(this);
-            Layout.AddView(UpgradeMenuButton);
-
-            UpgradeMenu = new UpgradeMenu(this);
-            Layout.AddView(UpgradeMenu);
+						UpgradeMenu = new UpgradeMenu(this);
+						Layout.AddView(UpgradeMenu);
+						UpgradeMenuButton = new UpgradeMenuButton(this, UpgradeMenu);
+						Layout.AddView(UpgradeMenuButton);
         }
 
         public bool IsGooglePlayServicesInstalled()

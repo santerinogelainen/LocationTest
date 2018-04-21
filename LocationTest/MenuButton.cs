@@ -13,10 +13,10 @@ using Android.Widget;
 
 namespace LocationTest
 {
-    public class MenuButton : ImageButton, ImageButton.IOnClickListener
+    public class MenuButton : TouchableButton
     {
 
-        public MenuButton(Context context) : base(context)
+				public MenuButton(Context context) : base(context)
         {
             FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(175, 175);
             param.SetMargins(10, 10, 10, 10);
@@ -28,17 +28,6 @@ namespace LocationTest
             SetAdjustViewBounds(true);
 
             SetBackgroundColor(Color.Transparent);
-        }
-
-        public virtual void OnClick(View v)
-        {
-
-        }
-
-
-        void IOnClickListener.OnClick(View v)
-        {
-            OnClick(v);
         }
     }
 }

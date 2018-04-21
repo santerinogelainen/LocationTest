@@ -16,7 +16,7 @@ namespace LocationTest
     /// This class represents a layout that can have custom touch events on touch move, up and down
     /// This is a subclass of framelayout
     /// </summary>
-    public class TouchableLayout : FrameLayout
+    public class TouchableLayout : FrameLayout, ITouchable
     {
 
         // touch positions on start, end and the delta during movement

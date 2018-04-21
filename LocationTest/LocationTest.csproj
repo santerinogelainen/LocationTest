@@ -107,7 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapImage.cs" />
+    <Compile Include="ITouchable.cs" />
     <Compile Include="MenuButton.cs" />
+    <Compile Include="TouchableButton.cs" />
     <Compile Include="UpgradeMenu.cs" />
     <Compile Include="UpgradeMenuButton.cs" />
     <Compile Include="Character.cs" />
