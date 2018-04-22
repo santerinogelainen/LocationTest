@@ -9,52 +9,57 @@ using Android.Views;
 using LocationTest.Support;
 using LocationTest.Views.UI;
 using LocationTest.Views.Map;
+using Android.Animation;
 
 namespace LocationTest.Activities
 {
     [Activity(Label = "MapActivity")]
-    public class MapActivity : FragmentActivity
+    public class MapActivity : FragmentActivity, ValueAnimator.IAnimatorUpdateListener
     {
-
-				public int Width { get; set; }
-				public int Height { get; set; }
 
         Map Map { get; set; }
         Character Character { get; set; }
-        UpgradeMenuButton UpgradeMenuButton { get; set; }
         UpgradeMenu UpgradeMenu { get; set; }
+				
+				ValueAnimator Animation { get; set; }
 
-        ViewGroup Layout { get; set; }
-
-        GoogleMapOptions mapOptions = new GoogleMapOptions()
-            .InvokeMapType(Settings.Map.MapType)
-            .InvokeMaxZoomPreference(Settings.Map.MaxZoom)
-            .InvokeMinZoomPreference(Settings.Map.MinZoom)
-            .InvokeCompassEnabled(false);
-
-        protected override void OnCreate(Bundle savedInstanceState)
+				protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             
             SetContentView(Resource.Layout.MapActivity);
 
-            Layout = FindViewById<ViewGroup>(Resource.Id.layout);
+						Map = FindViewById<Map>(Resource.Id.map);
+            Character = FindViewById<Character>(Resource.Id.character);
+						UpgradeMenu = FindViewById<UpgradeMenu>(Resource.Id.upgrademenu);
 
-            if (IsGooglePlayServicesInstalled())
-            {
-                Map = new Map(this, mapOptions);
-            }
-
-            Character = new Character(this);
-            Layout.AddView(Character);
-
-						UpgradeMenu = new UpgradeMenu(this);
-						UpgradeMenuButton = new UpgradeMenuButton(this, UpgradeMenu);
-						Layout.AddView(UpgradeMenuButton);
-						Layout.AddView(UpgradeMenu);
+						Animation = new ValueAnimator();
+						Animation.AddUpdateListener(this);
 				}
 
-        public bool IsGooglePlayServicesInstalled()
+				[Java.Interop.Export("ShowUpgradeMenu")]
+				public void ShowUpgradeMenu(View v)
+				{
+						Animation.SetIntValues(UpgradeMenu.MeasuredHeight, 0);
+						Animation.SetDuration(500);
+						Animation.Start();
+				}
+
+				[Java.Interop.Export("HideUpgradeMenu")]
+				public void HideUpgradeMenu(View v)
+				{
+						Animation.SetIntValues(0, UpgradeMenu.MeasuredHeight);
+						Animation.SetDuration(500);
+						Animation.Start();
+				}
+
+				public void OnAnimationUpdate(ValueAnimator animation)
+				{
+						UpgradeMenu.TranslationY = (int)animation.AnimatedValue;
+				}
+
+				// to do! move to startloadingscreen
+				public bool IsGooglePlayServicesInstalled()
         {
             var query = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
             if (query == ConnectionResult.Success)
@@ -71,6 +76,7 @@ namespace LocationTest.Activities
 
             return true;
         }
-    }
+
+		}
 }
 

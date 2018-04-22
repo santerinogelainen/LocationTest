@@ -10,25 +10,30 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Graphics;
+using Android.Util;
+using LocationTest.Support;
 
 namespace LocationTest.Views.UI
 {
     public class UpgradeMenu : RelativeLayout
     {
 
-        public UpgradeMenu(Activity parent) : base(parent)
+        public UpgradeMenu(Context context) : base(context)
         {
-						AddView(new UpgradeMenuClose(parent, this));
+						RelativeLayout.LayoutParams param = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
+						LayoutParameters = param;
 
-            LayoutParameters = new RelativeLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
             SetBackgroundColor(Color.White);
             Post(OnViewCreated);
         }
 
-        public void OnViewCreated()
+				public UpgradeMenu(Context context, IAttributeSet attrs) : this(context) { }
+				public UpgradeMenu(Context context, IAttributeSet attrs, int defStyle) : this(context) { }
+
+				public void OnViewCreated()
         {
-            Top = Height;
-        }
+            TranslationY = MeasuredHeight;
+				}
 
     }
 }

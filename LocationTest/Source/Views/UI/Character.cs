@@ -9,6 +9,7 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using LocationTest.Support;
@@ -18,14 +19,11 @@ namespace LocationTest.Views.UI
     public class Character : ImageView
     {
 
-        public Character(Activity parent) : base(parent)
+        public Character(Context context) : base(context)
         {
-            BitmapImage bmp = new BitmapImage(Resource.Drawable.placeholder);
-            SetImageDrawable(bmp);
-            FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(100, 100);
-            param.Gravity = GravityFlags.Center;
-            LayoutParameters = param;
         }
+				public Character(Context context, IAttributeSet attrs) : this(context) { }
+				public Character(Context context, IAttributeSet attrs, int defStyle) : this(context) { }
 
-    }
+		}
 }

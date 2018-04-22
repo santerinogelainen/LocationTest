@@ -24,7 +24,13 @@ namespace LocationTest.Support
             public const int MapType = GoogleMap.MapTypeTerrain;
         }
 
-        public static class DefaultCamera
+				public static GoogleMapOptions GoogleMapOptions =  new GoogleMapOptions()
+            .InvokeMapType(Map.MapType)
+            .InvokeMaxZoomPreference(Map.MaxZoom)
+            .InvokeMinZoomPreference(Map.MinZoom)
+            .InvokeCompassEnabled(false);
+
+				public static class DefaultCamera
         {
             public const int Tilt = 45;
             public static readonly LatLng Target = new LatLng(0, 0);

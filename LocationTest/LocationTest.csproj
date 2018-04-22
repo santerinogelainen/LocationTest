@@ -55,6 +55,7 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -111,8 +112,6 @@
     <Compile Include="Source\Views\Support\MenuButton.cs" />
     <Compile Include="Source\Views\Support\TouchableButton.cs" />
     <Compile Include="Source\Views\Support\TouchableImageButton.cs" />
-    <Compile Include="Source\Views\UI\UpgradeMenu.cs" />
-    <Compile Include="Source\Views\UI\UpgradeMenuButton.cs" />
     <Compile Include="Source\Views\UI\Character.cs" />
     <Compile Include="Source\Support\Other.cs" />
     <Compile Include="Source\Support\LocationProvider.cs" />
@@ -125,7 +124,7 @@
     <Compile Include="Source\Support\Settings.cs" />
     <Compile Include="Source\Activities\StartLoadingScreen.cs" />
     <Compile Include="Source\Views\Support\TouchableLayout.cs" />
-    <Compile Include="Source\Views\UI\UpgradeMenuClose.cs" />
+    <Compile Include="Source\Views\UI\UpgradeMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -150,9 +149,6 @@
     <Folder Include="Resources\mipmap-xhdpi\" />
     <Folder Include="Resources\mipmap-xxhdpi\" />
     <Folder Include="Resources\mipmap-xxxhdpi\" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\values\Ids.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\placeholder.png" />

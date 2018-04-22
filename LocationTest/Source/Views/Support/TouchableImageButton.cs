@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using LocationTest.Support;
@@ -35,6 +36,9 @@ namespace LocationTest.Views.Support
 				{
 						InitTouchEvents();
 				}
+
+				public TouchableImageButton(Context context, IAttributeSet attrs) : this(context) { }
+				public TouchableImageButton(Context context, IAttributeSet attrs, int defStyle) : this(context) { }
 
 				/// <summary>
 				/// Sets a vector's x and y values with motionevent e.GetX or e.GetY 

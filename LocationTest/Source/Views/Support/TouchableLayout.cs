@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using LocationTest.Support;
@@ -36,12 +37,15 @@ namespace LocationTest.Views.Support
             InitTouchEvents();
         }
 
-        /// <summary>
-        /// Sets a vector's x and y values with motionevent e.GetX or e.GetY 
-        /// </summary>
-        /// <param name="vector">vector</param>
-        /// <param name="e">motion event</param>
-        public void SetVector(Vector2 vector, MotionEvent e)
+				public TouchableLayout(Context context, IAttributeSet attrs) : this(context) { }
+				public TouchableLayout(Context context, IAttributeSet attrs, int defStyle) : this(context) { }
+
+				/// <summary>
+				/// Sets a vector's x and y values with motionevent e.GetX or e.GetY 
+				/// </summary>
+				/// <param name="vector">vector</param>
+				/// <param name="e">motion event</param>
+				public void SetVector(Vector2 vector, MotionEvent e)
         {
             vector.X = e.GetX();
             vector.Y = e.GetY();

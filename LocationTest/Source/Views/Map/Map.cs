@@ -14,6 +14,7 @@ using Android.Views;
 using Android.Widget;
 using LocationTest.Views.Support;
 using LocationTest.Support;
+using Android.Util;
 
 namespace LocationTest.Views.Map
 {
@@ -37,23 +38,22 @@ namespace LocationTest.Views.Map
         // view that contains the googlemap
         public GoogleMapView MapView { get; set; }
 
-        public Map(FragmentActivity container, GoogleMapOptions options) : base(container)
+        public Map(Context context) : base(context)
         {
-            Activity = container;
-
-            // its important that we generate an id and insert this layout before creating GoogleMapView since GoogleMapView uses that id to generate the google map inside this layout
-            Id = GenerateViewId();
-            
-            Activity.FindViewById<ViewGroup>(Resource.Id.layout).AddView(this);
-
-            MapView = new GoogleMapView(this, options);
+            Activity = (FragmentActivity)context;
 
             Post(OnViewCreated);
         }
 
-        public void OnViewCreated()
+
+				public Map(Context context, IAttributeSet attrs) : this(context) { }
+				public Map(Context context, IAttributeSet attrs, int defStyle) : this(context) { }
+
+
+				public void OnViewCreated()
         {
-            CenterPoint = new Vector2(Width / 2, Height / 2);
+						MapView = new GoogleMapView(this, Settings.GoogleMapOptions);
+						CenterPoint = new Vector2(Width / 2, Height / 2);
             //D.WL(CenterPoint, this);
         }
 
