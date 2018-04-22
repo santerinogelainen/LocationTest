@@ -6,6 +6,7 @@ using System.Text;
 using Android.App;
 using Android.Content;
 using Android.Gms.Location;
+using Android.Gms.Maps.Model;
 using Android.Gms.Tasks;
 using Android.Locations;
 using Android.OS;
@@ -22,8 +23,6 @@ namespace LocationTest.Support
     public class LocationProvider : LocationCallback
     {
 
-        const int UPDATE_INTERVAL = 4000;
-
         /// <summary>
         /// Fires when a new location is acquired
         /// </summary>
@@ -36,6 +35,13 @@ namespace LocationTest.Support
 
         // the last location that was aqcuired
         Location LastLocation { get; set; }
+
+				public double MetersMoved { get; set; }
+				
+				public bool UserIsMoving { get; set; }
+
+				private int CurrentMovementCheckInterval { get; set; }
+				private double MetersMovedBetweenMovementChecks { get; set; }
 
         // true if this class is requesting location
         bool IsRequestingLocation { get; set; }
@@ -53,7 +59,7 @@ namespace LocationTest.Support
             ParentActivity = parent;
             Client = LocationServices.GetFusedLocationProviderClient(ParentActivity);
 
-            if (startrequesting)
+						if (startrequesting)
             {
                 StartRequestingLocationUpdates();
             }
@@ -66,7 +72,7 @@ namespace LocationTest.Support
         {
             LocationRequest request = new LocationRequest()
                 .SetPriority(LocationRequest.PriorityHighAccuracy)
-                .SetInterval(UPDATE_INTERVAL)
+                .SetInterval(Settings.Location.UpdateInterval)
                 .SetFastestInterval(1000);
 
             await Client.RequestLocationUpdatesAsync(request, this);
@@ -94,6 +100,39 @@ namespace LocationTest.Support
             UpdateLocation(location);
         }
 
+				public void CheckMetersMoved(Location oldLocation, Location newLocation)
+				{
+						if (oldLocation != null && newLocation != null)
+						{
+								MetersMovedBetweenMovementChecks += Convert.ToMeters(Convert.ToLatLng(oldLocation), Convert.ToLatLng(newLocation));
+
+								if (CurrentMovementCheckInterval >= Settings.Location.MovementThresholdInterval)
+								{
+										D.WL(String.Format("Between movement check intervals user has moved:"), this);
+										D.WL(String.Format("{0}m of {1}m in {2}s", MetersMovedBetweenMovementChecks, Settings.Location.MovementThreshold, (Settings.Location.MovementThresholdInterval * Settings.Location.UpdateInterval) / 1000), this);
+										if (MetersMovedBetweenMovementChecks >= Settings.Location.MovementThreshold)
+										{
+												UserIsMoving = true;
+												D.WL(String.Format("This means that the user is moving."), this);
+										}
+										else
+										{
+												UserIsMoving = false;
+												D.WL(String.Format("This means that the user is NOT moving."), this);
+										}
+
+										D.WLS(ParentActivity, String.Format("{0}m/{1}m in {2}s, Moving: {3}", MetersMovedBetweenMovementChecks, Settings.Location.MovementThreshold, (Settings.Location.MovementThresholdInterval * Settings.Location.UpdateInterval) / 1000, UserIsMoving));
+
+										MetersMovedBetweenMovementChecks = 0;
+										CurrentMovementCheckInterval = 0;
+								}
+								else
+								{
+										CurrentMovementCheckInterval++;
+								}
+						}
+				}
+
         /// <summary>
         /// Update the location
         /// </summary>
@@ -102,7 +141,8 @@ namespace LocationTest.Support
         {
             if (location != null)
             {
-                OnLocationUpdate?.Invoke(LastLocation, location);
+								CheckMetersMoved(LastLocation, location);
+								OnLocationUpdate?.Invoke(LastLocation, location);
                 LastLocation = location;
             }
         }

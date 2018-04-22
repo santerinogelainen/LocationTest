@@ -14,7 +14,16 @@
         android:layout_width="100px"
         android:layout_height="100px"
         android:layout_gravity="center"
-        android:src="@drawable/placeholder"/>
+        android:src="@drawable/placeholder" />
+<!-- TOTAL COINS  -->
+    <TextView
+        android:id="@+id/totalcoins"
+        android:layout_height="150px"
+        android:layout_width="match_parent"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textAlignment="center"
+        android:textSize="50px" />
 <!-- UPGRADEMENU BUTTON -->
     <LocationTest.Views.Support.MenuButton
         android:id="@+id/upgrademenubutton"
@@ -38,4 +47,26 @@
             android:text="Close"
             android:onClick="HideUpgradeMenu" />
     </LocationTest.Views.UI.UpgradeMenu>
+	
+	
+	
+	
+	
+	
+	
+	<!--DEBUGGGGG-->
+	<RelativeLayout
+		android:id="@+id/debuglayout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@android:color/black">
+
+		<TextView
+			android:id="@+id/debugmessages"
+			android:textColor="@android:color/white"
+			android:textSize="18px"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+		
+	</RelativeLayout>
 </FrameLayout>

@@ -112,7 +112,7 @@ namespace LocationTest.Views.Map
             LatLng ln = new LatLng(after.Latitude, after.Longitude);
 
             CameraUpdate position = CameraUpdateFactory.NewLatLng(ln);
-            GoogleMap.AnimateCamera(position, null);
+            GoogleMap.AnimateCamera(position, Settings.Location.UpdateInterval, null);
             //System.Diagnostics.Debug.WriteLine("longitude: {0}, latitude: {1}", location.Longitude, location.Latitude);
         }
 
