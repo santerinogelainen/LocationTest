@@ -47,26 +47,29 @@
             android:text="Close"
             android:onClick="HideUpgradeMenu" />
     </LocationTest.Views.UI.UpgradeMenu>
-	
-	
-	
-	
-	
-	
-	
-	<!--DEBUGGGGG-->
-	<RelativeLayout
-		android:id="@+id/debuglayout"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:background="@android:color/black">
-
-		<TextView
-			android:id="@+id/debugmessages"
-			android:textColor="@android:color/white"
-			android:textSize="18px"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"/>
-		
-	</RelativeLayout>
+<!--DEBUGGGGG-->
+    <LinearLayout
+        android:id="@+id/debuglayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black">
+        <TextView
+            android:id="@+id/debugmessages"
+            android:textColor="@android:color/white"
+            android:textSize="18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+			<!--<Button
+				android:id="@+id/overwritelocation"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+			android:text="Overwrite location"
+			android:onClick="OverrideLocation"/>
+			<Button
+				android:id="@+id/stopoverwritelocation"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Stop overwrite location"
+				android:onClick="StopOverrideLocation"/>-->
+		</LinearLayout>
 </FrameLayout>

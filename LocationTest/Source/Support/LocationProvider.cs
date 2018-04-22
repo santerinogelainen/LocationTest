@@ -36,6 +36,8 @@ namespace LocationTest.Support
         // the last location that was aqcuired
         Location LastLocation { get; set; }
 
+				public bool LocationOverriden { get; set; }
+
 				public double MetersMoved { get; set; }
 				
 				public bool UserIsMoving { get; set; }
@@ -104,21 +106,21 @@ namespace LocationTest.Support
 				{
 						if (oldLocation != null && newLocation != null)
 						{
-								MetersMovedBetweenMovementChecks += Convert.ToMeters(Convert.ToLatLng(oldLocation), Convert.ToLatLng(newLocation));
+								MetersMovedBetweenMovementChecks += oldLocation.DistanceTo(newLocation);
 
 								if (CurrentMovementCheckInterval >= Settings.Location.MovementThresholdInterval)
 								{
-										D.WL(String.Format("Between movement check intervals user has moved:"), this);
-										D.WL(String.Format("{0}m of {1}m in {2}s", MetersMovedBetweenMovementChecks, Settings.Location.MovementThreshold, (Settings.Location.MovementThresholdInterval * Settings.Location.UpdateInterval) / 1000), this);
+										//D.WL(String.Format("Between movement check intervals user has moved:"), this);
+										//D.WL(String.Format("{0}m of {1}m in {2}s", MetersMovedBetweenMovementChecks, Settings.Location.MovementThreshold, (Settings.Location.MovementThresholdInterval * Settings.Location.UpdateInterval) / 1000), this);
 										if (MetersMovedBetweenMovementChecks >= Settings.Location.MovementThreshold)
 										{
 												UserIsMoving = true;
-												D.WL(String.Format("This means that the user is moving."), this);
+												//D.WL(String.Format("This means that the user is moving."), this);
 										}
 										else
 										{
 												UserIsMoving = false;
-												D.WL(String.Format("This means that the user is NOT moving."), this);
+												//D.WL(String.Format("This means that the user is NOT moving."), this);
 										}
 
 										D.WLS(ParentActivity, String.Format("{0}m/{1}m in {2}s, Moving: {3}", MetersMovedBetweenMovementChecks, Settings.Location.MovementThreshold, (Settings.Location.MovementThresholdInterval * Settings.Location.UpdateInterval) / 1000, UserIsMoving));
@@ -146,6 +148,19 @@ namespace LocationTest.Support
                 LastLocation = location;
             }
         }
+
+				public void OverrideLocation(Location location)
+				{
+						StopRequestingLocationUpdates();
+						UpdateLocation(location);
+						LocationOverriden = true;
+				}
+
+				public void StopOverridingLocation()
+				{
+						StartRequestingLocationUpdates();
+						LocationOverriden = false;
+				}
 
         /// <summary>
         /// Fires when a new location is acquired my the fused client

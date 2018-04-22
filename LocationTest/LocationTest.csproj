@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Source\Support\BitmapImage.cs" />
     <Compile Include="Source\Support\ITouchable.cs" />
+    <Compile Include="Source\Support\LatLngEvaluator.cs" />
     <Compile Include="Source\Views\Support\MenuButton.cs" />
     <Compile Include="Source\Views\Support\TouchableButton.cs" />
     <Compile Include="Source\Views\Support\TouchableImageButton.cs" />

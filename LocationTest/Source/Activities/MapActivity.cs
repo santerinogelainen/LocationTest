@@ -10,6 +10,7 @@ using LocationTest.Support;
 using LocationTest.Views.UI;
 using LocationTest.Views.Map;
 using Android.Animation;
+using Android.Locations;
 
 namespace LocationTest.Activities
 {
@@ -52,6 +53,21 @@ namespace LocationTest.Activities
 						Animation.SetDuration(500);
 						Animation.Start();
 				}
+
+				/*[Java.Interop.Export("OverrideLocation")]
+				public void OverrideLocation(View v)
+				{
+						Location l = new Location(LocationManager.GpsProvider);
+						l.Latitude = 61.054821;
+						l.Longitude = 28.189627;
+						Map.MapView.LocationProvider.OverrideLocation(l);
+				}
+
+				[Java.Interop.Export("StopOverrideLocation")]
+				public void StopOverrideLocation(View v)
+				{
+						Map.MapView.LocationProvider.StopOverridingLocation();
+				}*/
 
 				public void OnAnimationUpdate(ValueAnimator animation)
 				{

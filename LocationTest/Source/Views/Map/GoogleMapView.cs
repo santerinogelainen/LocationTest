@@ -13,17 +13,22 @@ using Android.Widget;
 using Android.Locations;
 using Android.Gms.Maps.Model;
 using LocationTest.Support;
+using Android.Animation;
 
 namespace LocationTest.Views.Map
 {
     /// <summary>
     /// Represents the googlemap part of the map. Cannot contain any custom openGL graphics, just the googlemap
     /// </summary>
-    public class GoogleMapView : SupportMapFragment, IOnMapReadyCallback
+    public class GoogleMapView : SupportMapFragment, IOnMapReadyCallback, ValueAnimator.IAnimatorUpdateListener
     {
 
-        // the google map
-        public GoogleMap GoogleMap { get; set; }
+				private ValueAnimator Animation { get; set; }
+				private LatLng LocationBefore { get; set; }
+				private LatLng LocationAfter { get; set; }
+
+				// the google map
+				public GoogleMap GoogleMap { get; set; }
 
         // the options
         public GoogleMapOptions Options { get; set; }
@@ -41,6 +46,10 @@ namespace LocationTest.Views.Map
         /// <param name="options">The options for this GoogleMapView</param>
         public GoogleMapView(Map parent, GoogleMapOptions options) : base(){
             Parent = parent;
+
+						// init animation class for custom animations
+						Animation = new ValueAnimator();
+						Animation.AddUpdateListener(this);
 
             // set the options and initialize GoogleMapView
             SetOptions(options);
@@ -109,13 +118,31 @@ namespace LocationTest.Views.Map
         /// <param name="after"></param>
         public void OnLocationUpdate(Location before, Location after)
         {
-            LatLng ln = new LatLng(after.Latitude, after.Longitude);
+						//LatLng ln = new LatLng(after.Latitude, after.Longitude);
 
-            CameraUpdate position = CameraUpdateFactory.NewLatLng(ln);
-            GoogleMap.AnimateCamera(position, Settings.Location.UpdateInterval, null);
+						D.WL(after);
+
+						if (before != null && after != null)
+						{
+								LocationBefore = LocationTest.Support.Convert.ToLatLng(before);
+								LocationAfter = LocationTest.Support.Convert.ToLatLng(after);
+								Animation.SetIntValues(0, 1000);
+								Animation.SetDuration(Settings.Location.UpdateInterval);
+								Animation.Start();
+						}
+            /*CameraUpdate position = CameraUpdateFactory.NewLatLng(ln);
+            GoogleMap.AnimateCamera(position, Settings.Location.UpdateInterval, null);*/
             //System.Diagnostics.Debug.WriteLine("longitude: {0}, latitude: {1}", location.Longitude, location.Latitude);
         }
 
+				public void OnAnimationUpdate(ValueAnimator animation)
+				{
+						LatLng final = new LatLng(LocationBefore.Latitude + Animation.AnimatedFraction * (LocationAfter.Latitude - LocationBefore.Latitude), LocationBefore.Longitude + Animation.AnimatedFraction * (LocationAfter.Longitude - LocationBefore.Longitude));
+						D.WL(final);
 
-    }
+						CameraPosition.Builder camera = new CameraPosition.Builder(GoogleMap.CameraPosition);
+						camera.Target(final);
+						GoogleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
+				}
+		}
 }

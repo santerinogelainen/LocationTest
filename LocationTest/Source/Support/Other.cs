@@ -48,14 +48,20 @@ namespace LocationTest.Support
         /// <summary>
         /// WriteLine
         /// </summary>
-        public static void WL(string text, Object caller = null)
+        public static void WL(Object text, Object caller = null)
         {
             string line = String.Format("{0,0:00}:{1,0:00}:{2,0:00} | ", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
             if (caller != null)
             {
                 line += String.Format("{0} | ", caller.GetType().Name);
             }
-            line += text;
+						if (text == null)
+						{
+								line += "null";
+						} else
+						{
+								line += text.ToString();
+						}
             System.Diagnostics.Debug.WriteLine(line);
         }
 
@@ -63,9 +69,9 @@ namespace LocationTest.Support
 				/// <summary>
 				/// Write line on screen
 				/// </summary>
-				public static void WLS(Context context, string text)
+				public static void WLS(Context context, Object text)
 				{
-						((Activity)context).FindViewById<TextView>(Resource.Id.debugmessages).Text = text;
+						((Activity)context).FindViewById<TextView>(Resource.Id.debugmessages).Text = text.ToString();
 				}
     }
 
@@ -81,7 +87,7 @@ namespace LocationTest.Support
 						return new LatLng(location.Latitude, location.Longitude);
 				}
 
-				private static double PI180(double value)
+				/*private static double PI180(double value)
 				{
 						return value * Math.PI / 180;
 				}
@@ -104,7 +110,7 @@ namespace LocationTest.Support
 						double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
 						double d = eRadius * c;
 						return d * 1000;
-				}
+				}*/
 		}
 
 }

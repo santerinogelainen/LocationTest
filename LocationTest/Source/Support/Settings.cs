@@ -40,11 +40,11 @@ namespace LocationTest.Support
             .InvokeMinZoomPreference(Map.MinZoom)
             .InvokeCompassEnabled(false);
 
-				public static class DefaultCamera
+				/*public static class DefaultCamera
         {
             public const int Tilt = 45;
             public static readonly LatLng Target = new LatLng(0, 0);
-        }
+        }*/
 
         public static class Gestures
         {
