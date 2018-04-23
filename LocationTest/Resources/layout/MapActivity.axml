@@ -25,18 +25,20 @@
         android:textAlignment="center"
         android:textSize="50px" />
 <!-- UPGRADEMENU BUTTON -->
-    <LocationTest.Views.Support.MenuButton
+    <LocationTest.Views.UI.MenuButton
         android:id="@+id/upgrademenubutton"
         android:src="@drawable/placeholder"
-        android:onClick="ShowUpgradeMenu"
+        android:onClick="ShowMenu"
         android:layout_width="175px"
         android:layout_height="175px"
+				android:tag="upgrademenu"
         android:layout_gravity="bottom" />
 <!-- UPGRADEMENU -->
-    <LocationTest.Views.UI.UpgradeMenu
+    <LocationTest.Views.UI.HiddenMenu
         android:id="@+id/upgrademenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+				android:background="@android:color/white">
     <!-- CLOSE -->
         <Button
             android:id="@+id/closeupgrademenu"
@@ -45,8 +47,9 @@
             android:textColor="@android:color/black"
             android:background="@android:color/transparent"
             android:text="Close"
-            android:onClick="HideUpgradeMenu" />
-    </LocationTest.Views.UI.UpgradeMenu>
+						android:tag="upgrademenu"
+            android:onClick="HideMenu" />
+    </LocationTest.Views.UI.HiddenMenu>
 <!--DEBUGGGGG-->
     <LinearLayout
         android:id="@+id/debuglayout"
@@ -59,17 +62,5 @@
             android:textSize="18px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-			<!--<Button
-				android:id="@+id/overwritelocation"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-			android:text="Overwrite location"
-			android:onClick="OverrideLocation"/>
-			<Button
-				android:id="@+id/stopoverwritelocation"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="Stop overwrite location"
-				android:onClick="StopOverrideLocation"/>-->
 		</LinearLayout>
 </FrameLayout>

@@ -6,8 +6,10 @@ using System.Text;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Gms.Common;
 using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using LocationTest.Support;
@@ -19,21 +21,28 @@ namespace LocationTest.Activities
     {
 
         string[] AllPermissions { get; set; }
-
+				string GooglePlayError { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.StartLoadingScreen);
 
-            AllPermissions = PermissionManager.GetRequestedPermissions();
-            if (!CheckAllPermissions())
-            {
-                PermissionManager.AskForPermissions(this, AllPermissions);
-            } else
-            {
-                StartActivity(typeof(MapActivity));
-            }
+						if (!IsGooglePlayServicesInstalled())
+						{
+								// to do show no services screen
+						} else
+						{
+								AllPermissions = PermissionManager.GetRequestedPermissions();
+								if (!CheckAllPermissions())
+								{
+										PermissionManager.AskForPermissions(this, AllPermissions);
+								}
+								else
+								{
+										StartActivity(typeof(MapActivity));
+								}
+						}
         }
 
         public bool CheckAllPermissions()
@@ -60,5 +69,20 @@ namespace LocationTest.Activities
                 StartActivity(typeof(MapActivity));
             }
         }
-    }
+				
+				public bool IsGooglePlayServicesInstalled()
+				{
+						var query = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+						if (query == ConnectionResult.Success)
+						{
+								return true;
+						}
+
+						if (GoogleApiAvailability.Instance.IsUserResolvableError(query))
+						{
+								GooglePlayError = GoogleApiAvailability.Instance.GetErrorString(query);
+						}
+						return false;
+				}
+		}
 }

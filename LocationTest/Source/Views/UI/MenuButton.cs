@@ -11,8 +11,9 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using LocationTest.Views.Support;
 
-namespace LocationTest.Views.Support
+namespace LocationTest.Views.UI
 {
     public class MenuButton : TouchableImageButton
     {

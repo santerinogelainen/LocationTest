@@ -86,31 +86,22 @@ namespace LocationTest.Support
 				{
 						return new LatLng(location.Latitude, location.Longitude);
 				}
+		}
 
-				/*private static double PI180(double value)
+		public static class ActivityHelper
+		{
+				public static View FindViewByIdName(Activity activity, string idname)
 				{
-						return value * Math.PI / 180;
+						if (!string.IsNullOrEmpty(idname))
+						{
+								int id = activity.Resources.GetIdentifier(idname, "id", activity.PackageName);
+								if (id != 0)
+								{
+										return activity.FindViewById(id);
+								}
+						}
+						return null;
 				}
-
-				/// <summary>
-				/// Converts two LatLng points to meters
-				/// https://stackoverflow.com/questions/639695/how-to-convert-latitude-or-longitude-to-meters
-				/// </summary>
-				/// <param name="point1"></param>
-				/// <param name="point2"></param>
-				/// <returns></returns>
-				public static double ToMeters(LatLng point1, LatLng point2)
-				{
-						double eRadius = 6378.137f;
-						double dLat = PI180(point2.Latitude) - PI180(point1.Latitude);
-						double dLon = PI180(point2.Longitude) - PI180(point1.Longitude);
-						double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-								Math.Cos(PI180(point1.Latitude)) * Math.Cos(PI180(point2.Latitude)) *
-								Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
-						double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-						double d = eRadius * c;
-						return d * 1000;
-				}*/
 		}
 
 }

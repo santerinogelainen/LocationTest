@@ -138,7 +138,7 @@ namespace LocationTest.Views.Map
 				public void OnAnimationUpdate(ValueAnimator animation)
 				{
 						LatLng final = new LatLng(LocationBefore.Latitude + Animation.AnimatedFraction * (LocationAfter.Latitude - LocationBefore.Latitude), LocationBefore.Longitude + Animation.AnimatedFraction * (LocationAfter.Longitude - LocationBefore.Longitude));
-						D.WL(final);
+						//D.WL(final);
 
 						CameraPosition.Builder camera = new CameraPosition.Builder(GoogleMap.CameraPosition);
 						camera.Target(final);

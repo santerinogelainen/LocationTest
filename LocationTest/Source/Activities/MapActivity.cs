@@ -15,14 +15,12 @@ using Android.Locations;
 namespace LocationTest.Activities
 {
     [Activity(Label = "MapActivity")]
-    public class MapActivity : FragmentActivity, ValueAnimator.IAnimatorUpdateListener
+    public class MapActivity : FragmentActivity
     {
 
         Map Map { get; set; }
         Character Character { get; set; }
-        UpgradeMenu UpgradeMenu { get; set; }
-				
-				ValueAnimator Animation { get; set; }
+        HiddenMenu UpgradeMenu { get; set; }
 
 				protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -32,66 +30,38 @@ namespace LocationTest.Activities
 
 						Map = FindViewById<Map>(Resource.Id.map);
             Character = FindViewById<Character>(Resource.Id.character);
-						UpgradeMenu = FindViewById<UpgradeMenu>(Resource.Id.upgrademenu);
-
-						Animation = new ValueAnimator();
-						Animation.AddUpdateListener(this);
+						UpgradeMenu = FindViewById<HiddenMenu>(Resource.Id.upgrademenu);
 				}
 
-				[Java.Interop.Export("ShowUpgradeMenu")]
-				public void ShowUpgradeMenu(View v)
+				/// <summary>
+				/// Show a hiddenmenu
+				/// Make sure that the calling view has a tag with the id name of the hiddenmenu
+				/// </summary>
+				[Java.Interop.Export("ShowMenu")]
+				public void ShowMenu(View v)
 				{
-						Animation.SetIntValues(UpgradeMenu.MeasuredHeight, 0);
-						Animation.SetDuration(500);
-						Animation.Start();
+						View menu = ActivityHelper.FindViewByIdName(this, (string)v.Tag);
+						if (menu is HiddenMenu && menu != null)
+						{
+								D.WL("show menu");
+								((HiddenMenu)menu).Show();
+						}
 				}
 
-				[Java.Interop.Export("HideUpgradeMenu")]
-				public void HideUpgradeMenu(View v)
+				/// <summary>
+				/// Hide a hiddenmenu
+				/// Make sure that the calling view has a tag with the id name of the hiddenmenu
+				/// </summary>
+				[Java.Interop.Export("HideMenu")]
+				public void HideMenu(View v)
 				{
-						Animation.SetIntValues(0, UpgradeMenu.MeasuredHeight);
-						Animation.SetDuration(500);
-						Animation.Start();
+						View menu = ActivityHelper.FindViewByIdName(this, (string)v.Tag);
+						if (menu is HiddenMenu && menu != null)
+						{
+								D.WL("hide menu");
+								((HiddenMenu)menu).Hide();
+						}
 				}
-
-				/*[Java.Interop.Export("OverrideLocation")]
-				public void OverrideLocation(View v)
-				{
-						Location l = new Location(LocationManager.GpsProvider);
-						l.Latitude = 61.054821;
-						l.Longitude = 28.189627;
-						Map.MapView.LocationProvider.OverrideLocation(l);
-				}
-
-				[Java.Interop.Export("StopOverrideLocation")]
-				public void StopOverrideLocation(View v)
-				{
-						Map.MapView.LocationProvider.StopOverridingLocation();
-				}*/
-
-				public void OnAnimationUpdate(ValueAnimator animation)
-				{
-						UpgradeMenu.TranslationY = (int)animation.AnimatedValue;
-				}
-
-				// to do! move to startloadingscreen
-				public bool IsGooglePlayServicesInstalled()
-        {
-            var query = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
-            if (query == ConnectionResult.Success)
-            {
-                Log.Info("MainActivity", "Google play is installed");
-                return true;
-            }
-
-            if (GoogleApiAvailability.Instance.IsUserResolvableError(query))
-            {
-                string error = GoogleApiAvailability.Instance.GetErrorString(query);
-                Log.Error("MainActivity", "Google playe services error {0} - {1}", query, error);
-            }
-
-            return true;
-        }
 
 		}
 }
