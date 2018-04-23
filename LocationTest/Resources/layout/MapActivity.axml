@@ -1,66 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/layout">
-<!-- MAP -->
-    <LocationTest.Views.Map.Map
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-<!-- CHARACTER -->
-    <LocationTest.Views.UI.Character
-        android:id="@+id/character"
-        android:layout_width="100px"
-        android:layout_height="100px"
-        android:layout_gravity="center"
-        android:src="@drawable/placeholder" />
-<!-- TOTAL COINS  -->
-    <TextView
-        android:id="@+id/totalcoins"
-        android:layout_height="150px"
-        android:layout_width="match_parent"
-        android:text="0"
-        android:textColor="@android:color/white"
-        android:textAlignment="center"
-        android:textSize="50px" />
-<!-- UPGRADEMENU BUTTON -->
-    <LocationTest.Views.UI.MenuButton
-        android:id="@+id/upgrademenubutton"
-        android:src="@drawable/placeholder"
-        android:onClick="ShowMenu"
-        android:layout_width="175px"
-        android:layout_height="175px"
-				android:tag="upgrademenu"
-        android:layout_gravity="bottom" />
-<!-- UPGRADEMENU -->
-    <LocationTest.Views.UI.HiddenMenu
-        android:id="@+id/upgrademenu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-				android:background="@android:color/white">
-    <!-- CLOSE -->
-        <Button
-            android:id="@+id/closeupgrademenu"
-            android:layout_height="150px"
-            android:layout_width="match_parent"
-            android:textColor="@android:color/black"
-            android:background="@android:color/transparent"
-            android:text="Close"
-						android:tag="upgrademenu"
-            android:onClick="HideMenu" />
-    </LocationTest.Views.UI.HiddenMenu>
-<!--DEBUGGGGG-->
-    <LinearLayout
-        android:id="@+id/debuglayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/black">
-        <TextView
-            android:id="@+id/debugmessages"
-            android:textColor="@android:color/white"
-            android:textSize="18px"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-		</LinearLayout>
-</FrameLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+							android:layout_height="match_parent"
+							android:layout_width="match_parent"
+							android:orientation="vertical">
+
+	<!-- COINS  -->
+	<TableLayout android:layout_height="150px"
+							 android:layout_width="match_parent"
+							 android:stretchColumns="*"
+							 android:background="@color/dark_gray">
+		<TableRow android:id="@+id/coins">
+			<LocationTest.Views.UI.MoneyView
+				android:id="@+id/gold"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:tag="placeholder"
+				android:gravity="center"
+				android:paddingTop="40px"/>
+			<LocationTest.Views.UI.MoneyView
+				android:id="@+id/silver"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:tag="placeholder"
+				android:gravity="center"
+				android:paddingTop="40px"/>
+			<LocationTest.Views.UI.MoneyView
+				android:id="@+id/copper"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:tag="placeholder"
+				android:gravity="center"
+				android:paddingTop="40px"/>
+		</TableRow>
+	</TableLayout>
+	
+	<!-- CONTENT -->
+	<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="fill_parent"
+			android:id="@+id/layout">
+	<!-- MAP -->
+			<LocationTest.Views.Map.Map
+					android:id="@+id/map"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent" />
+	<!-- CHARACTER -->
+			<LocationTest.Views.UI.Character
+					android:id="@+id/character"
+					android:layout_width="100px"
+					android:layout_height="100px"
+					android:layout_gravity="center"
+					android:src="@drawable/placeholder" />
+	<!-- UPGRADEMENU BUTTON -->
+			<LocationTest.Views.UI.MenuButton
+					android:id="@+id/upgrademenubutton"
+					android:src="@drawable/placeholder"
+					android:onClick="ShowMenu"
+					android:layout_width="175px"
+					android:layout_height="175px"
+					android:tag="upgrademenu"
+					android:layout_gravity="bottom" />
+	<!-- UPGRADEMENU -->
+			<LocationTest.Views.UI.HiddenMenu
+					android:id="@+id/upgrademenu"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/dark_gray">
+			<!-- CLOSE -->
+					<Button
+							android:id="@+id/closeupgrademenu"
+							android:layout_height="150px"
+							android:layout_width="match_parent"
+							android:textColor="@android:color/white"
+							android:background="@android:color/transparent"
+							android:text="Close"
+							android:tag="upgrademenu"
+							android:onClick="HideMenu" />
+			</LocationTest.Views.UI.HiddenMenu>
+	<!--DEBUGGGGG-->
+			<LinearLayout
+					android:id="@+id/debuglayout"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:background="@android:color/black">
+					<TextView
+							android:id="@+id/debugmessages"
+							android:textColor="@android:color/white"
+							android:textSize="18px"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content" />
+			</LinearLayout>
+	</FrameLayout>
+</LinearLayout>

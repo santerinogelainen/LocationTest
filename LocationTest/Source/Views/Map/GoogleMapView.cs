@@ -14,6 +14,7 @@ using Android.Locations;
 using Android.Gms.Maps.Model;
 using LocationTest.Support;
 using Android.Animation;
+using Android.Views.Animations;
 
 namespace LocationTest.Views.Map
 {
@@ -50,6 +51,7 @@ namespace LocationTest.Views.Map
 						// init animation class for custom animations
 						Animation = new ValueAnimator();
 						Animation.AddUpdateListener(this);
+						Animation.SetInterpolator(new LinearInterpolator());
 
             // set the options and initialize GoogleMapView
             SetOptions(options);
@@ -118,10 +120,6 @@ namespace LocationTest.Views.Map
         /// <param name="after"></param>
         public void OnLocationUpdate(Location before, Location after)
         {
-						//LatLng ln = new LatLng(after.Latitude, after.Longitude);
-
-						D.WL(after);
-
 						if (before != null && after != null)
 						{
 								LocationBefore = LocationTest.Support.Convert.ToLatLng(before);
@@ -130,9 +128,6 @@ namespace LocationTest.Views.Map
 								Animation.SetDuration(Settings.Location.UpdateInterval);
 								Animation.Start();
 						}
-            /*CameraUpdate position = CameraUpdateFactory.NewLatLng(ln);
-            GoogleMap.AnimateCamera(position, Settings.Location.UpdateInterval, null);*/
-            //System.Diagnostics.Debug.WriteLine("longitude: {0}, latitude: {1}", location.Longitude, location.Latitude);
         }
 
 				public void OnAnimationUpdate(ValueAnimator animation)

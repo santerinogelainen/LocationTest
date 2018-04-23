@@ -11,27 +11,39 @@ using LocationTest.Views.UI;
 using LocationTest.Views.Map;
 using Android.Animation;
 using Android.Locations;
+using Android.Graphics;
 
 namespace LocationTest.Activities
 {
-    [Activity(Label = "MapActivity")]
+    [Activity(Label = "MapActivity", Theme = "@android:style/Theme.Black.NoTitleBar")]
     public class MapActivity : FragmentActivity
     {
 
         Map Map { get; set; }
         Character Character { get; set; }
         HiddenMenu UpgradeMenu { get; set; }
+				MoneyView GoldView { get; set; }
+				MoneyView SilverView { get; set; }
+				MoneyView CopperView { get; set; }
 
 				protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
             SetContentView(Resource.Layout.MapActivity);
 
-						Map = FindViewById<Map>(Resource.Id.map);
-            Character = FindViewById<Character>(Resource.Id.character);
-						UpgradeMenu = FindViewById<HiddenMenu>(Resource.Id.upgrademenu);
+						InitViews();
 				}
+
+				public void InitViews()
+				{
+						Map = FindViewById<Map>(Resource.Id.map);
+						Character = FindViewById<Character>(Resource.Id.character);
+						UpgradeMenu = FindViewById<HiddenMenu>(Resource.Id.upgrademenu);
+						GoldView = FindViewById<MoneyView>(Resource.Id.gold);
+						SilverView = FindViewById<MoneyView>(Resource.Id.silver);
+						CopperView = FindViewById<MoneyView>(Resource.Id.copper);
+				}
+
 
 				/// <summary>
 				/// Show a hiddenmenu

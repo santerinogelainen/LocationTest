@@ -108,8 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Source\Support\BitmapImage.cs" />
+    <Compile Include="Source\Support\Fonts.cs" />
     <Compile Include="Source\Support\ITouchable.cs" />
-    <Compile Include="Source\Support\LatLngEvaluator.cs" />
     <Compile Include="Source\Views\UI\MenuButton.cs" />
     <Compile Include="Source\Views\Support\TouchableButton.cs" />
     <Compile Include="Source\Views\Support\TouchableImageButton.cs" />
@@ -126,8 +126,10 @@
     <Compile Include="Source\Activities\StartLoadingScreen.cs" />
     <Compile Include="Source\Views\Support\TouchableLayout.cs" />
     <Compile Include="Source\Views\UI\HiddenMenu.cs" />
+    <Compile Include="Source\Views\UI\MoneyView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\PressStart2P-Regular.ttf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
@@ -153,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Colors.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

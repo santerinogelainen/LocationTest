@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -19,7 +20,7 @@ namespace LocationTest.Support
 				public static class Location
 				{
 						// how many meters do we need to walk
-						public const int MovementThreshold = 20;
+						public const int MovementThreshold = 30;
 						// in this many intervals (one interval is UpdateInterval)
 						public const int MovementThresholdInterval = 6;
 						// before the game start counting them towards meters walked
@@ -39,12 +40,6 @@ namespace LocationTest.Support
             .InvokeMaxZoomPreference(Map.MaxZoom)
             .InvokeMinZoomPreference(Map.MinZoom)
             .InvokeCompassEnabled(false);
-
-				/*public static class DefaultCamera
-        {
-            public const int Tilt = 45;
-            public static readonly LatLng Target = new LatLng(0, 0);
-        }*/
 
         public static class Gestures
         {

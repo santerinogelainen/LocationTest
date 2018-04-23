@@ -63,6 +63,7 @@ namespace LocationTest.Support
 
 						if (startrequesting)
             {
+								RequestLastLocationNow();
                 StartRequestingLocationUpdates();
             }
         }
