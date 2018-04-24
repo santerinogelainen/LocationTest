@@ -21,7 +21,7 @@ namespace LocationTest.Views.Map
     /// <summary>
     /// Represents the googlemap part of the map. Cannot contain any custom openGL graphics, just the googlemap
     /// </summary>
-    public class GoogleMapView : SupportMapFragment, IOnMapReadyCallback, ValueAnimator.IAnimatorUpdateListener
+    public class GoogleMapView : SupportMapFragment
     {
 
 				/// <summary>
@@ -29,22 +29,11 @@ namespace LocationTest.Views.Map
 				/// </summary>
 				public event Action OnCreated;
 
-				private ValueAnimator Animation { get; set; }
-				private LatLng LocationBefore { get; set; }
-				private LatLng LocationAfter { get; set; }
-
-				// the google map
-				public GoogleMap GoogleMap { get; set; }
-
         // the options
         public GoogleMapOptions Options { get; set; }
 
         // the map that contains this GoogleMapView
         public Map Parent { get; set; }
-
-        // the location provider
-				// TODO: move LocationProvider to Map class
-        public LocationTest.Support.LocationProvider LocationProvider { get; set; }
 
         /// <summary>
         /// Create the GoogleMapView
@@ -54,19 +43,9 @@ namespace LocationTest.Views.Map
         public GoogleMapView(Map parent, GoogleMapOptions options) : base(){
             Parent = parent;
 
-						// init animation class for custom animations
-						Animation = new ValueAnimator();
-						Animation.AddUpdateListener(this);
-						Animation.SetInterpolator(new LinearInterpolator());
-
             // set the options and initialize GoogleMapView
             SetOptions(options);
             InitMap();
-
-            // start requesting location
-            LocationProvider = new LocationTest.Support.LocationProvider(Parent.Activity);
-            LocationProvider.OnLocationUpdate += OnLocationUpdate;
-						
         }
 
         /// <summary>
@@ -91,7 +70,7 @@ namespace LocationTest.Views.Map
             FragmentTransaction transaction = manager.BeginTransaction();
             transaction.Add(Parent.Id, this, "mapfragment");
             transaction.Commit();
-            GetMapAsync(this);
+            GetMapAsync(Parent);
 				}
 
         /// <summary>
@@ -106,45 +85,6 @@ namespace LocationTest.Views.Map
             view.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
 						
 						OnCreated?.Invoke();
-				}
-
-        /// <summary>
-        /// Called when the google map is ready
-        /// </summary>
-        /// <param name="map">The map</param>
-        public void OnMapReady(GoogleMap map)
-        {
-            GoogleMap = map;
-
-            // disable gestures, since the containing map (Parent) handles all gestures
-            GoogleMap.UiSettings.SetAllGesturesEnabled(false);
-				}
-
-				/// <summary>
-				/// Called when the location updates in the provider
-				/// </summary>
-				/// <param name="before"></param>
-				/// <param name="after"></param>
-				public void OnLocationUpdate(Location before, Location after)
-        {
-						if (before != null && after != null)
-						{
-								LocationBefore = LocationTest.Support.Convert.ToLatLng(before);
-								LocationAfter = LocationTest.Support.Convert.ToLatLng(after);
-								Animation.SetIntValues(0, 1000);
-								Animation.SetDuration(Settings.Location.UpdateInterval);
-								Animation.Start();
-						}
-        }
-
-				public void OnAnimationUpdate(ValueAnimator animation)
-				{
-						LatLng final = new LatLng(LocationBefore.Latitude + Animation.AnimatedFraction * (LocationAfter.Latitude - LocationBefore.Latitude), LocationBefore.Longitude + Animation.AnimatedFraction * (LocationAfter.Longitude - LocationBefore.Longitude));
-						//D.WL(final);
-
-						CameraPosition.Builder camera = new CameraPosition.Builder(GoogleMap.CameraPosition);
-						camera.Target(final);
-						GoogleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
 				}
 		}
 }
