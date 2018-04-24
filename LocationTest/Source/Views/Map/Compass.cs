@@ -9,10 +9,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using LocationTest.Support;
 
 namespace LocationTest.Views.Map
 {
-		public class Compass : FrameLayout
+		public class Compass : FrameLayout, View.IOnClickListener
 		{
 
 				Map Map { get; set; }
@@ -44,7 +45,7 @@ namespace LocationTest.Views.Map
 						BackgroundImage = AddImage(background);
 						PointerImage = AddImage(pointer);
 						parent.OnRotate += OnMapRotate;
-
+						SetOnClickListener(this);
 				}
 				
 				/// <summary>
@@ -69,5 +70,10 @@ namespace LocationTest.Views.Map
 						}
 				}
 
+				public void OnClick(View v)
+				{
+						D.WL("straighten");
+						Map.Straighten();
+				}
 		}
 }

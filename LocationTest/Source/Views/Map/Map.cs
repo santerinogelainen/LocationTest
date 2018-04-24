@@ -139,20 +139,17 @@ namespace LocationTest.Views.Map
 						GoogleMap.UiSettings.SetAllGesturesEnabled(false);
 				}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				/// <summary>
+				/// Remove all rotation / bearing
+				/// </summary>
+				public void Straighten()
+				{
+						CameraPosition.Builder camera = new CameraPosition.Builder(GoogleMap.CameraPosition);
+						camera.Bearing(0);
+						OnRotate?.Invoke(0);
+						// TODO: Create a custom googlemap animator
+						GoogleMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()), 200, null);
+				}
 
 
 				/// <summary>
