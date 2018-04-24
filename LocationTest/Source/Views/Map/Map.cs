@@ -19,13 +19,11 @@ namespace LocationTest.Views.Map
     /// 
     /// This is a wrapper class for GoogleMapView that actually contains the googlemap. This class contains touch events that manipulate the view.
     /// </summary>
-    public class Map : TouchableLayout, ValueAnimator.IAnimatorUpdateListener, IOnMapReadyCallback
+    public class Map : TouchableLayout, IOnMapReadyCallback
 		{
 
 				// animation values
-				private ValueAnimator Animator { get; set; }
-				private LatLng LocationBefore { get; set; }
-				private LatLng LocationAfter { get; set; }
+				private GoogleMapAnimator Animator { get; set; }
 
 				/// <summary>
 				/// Called when the bearing changes on the map
@@ -56,11 +54,6 @@ namespace LocationTest.Views.Map
 				public Map(Context context) : base(context)
         {
             Activity = (FragmentActivity)context;
-
-						// init animation class for custom animations
-						Animator = new ValueAnimator();
-						Animator.AddUpdateListener(this);
-						Animator.SetInterpolator(new LinearInterpolator());
 
 						Post(OnViewCreated);
         }
@@ -94,13 +87,9 @@ namespace LocationTest.Views.Map
 				/// <param name="after">location after update</param>
 				public void OnLocationUpdate(Location before, Location after)
 				{
-						if (before != null && after != null)
+						if (after != null)
 						{
-								LocationBefore = LocationTest.Support.Convert.ToLatLng(before);
-								LocationAfter = LocationTest.Support.Convert.ToLatLng(after);
-								Animator.SetIntValues(0, 1000);
-								Animator.SetDuration(Settings.Location.UpdateInterval);
-								Animator.Start();
+								Animator.AnimateLocation(LocationTest.Support.Convert.ToLatLng(after), Settings.Location.UpdateInterval);
 						}
 				}
 
@@ -116,16 +105,10 @@ namespace LocationTest.Views.Map
         {
 						// set the bearing that we start with
             StartBearing = GoogleMap.CameraPosition.Bearing;
+
+						// stop bearing animation
+						Animator.StopBearingAnimation();
         }
-
-				public void OnAnimationUpdate(ValueAnimator animation)
-				{
-						LatLng final = new LatLng(LocationBefore.Latitude + Animator.AnimatedFraction * (LocationAfter.Latitude - LocationBefore.Latitude), LocationBefore.Longitude + Animator.AnimatedFraction * (LocationAfter.Longitude - LocationBefore.Longitude));
-
-						CameraPosition.Builder camera = new CameraPosition.Builder(GoogleMap.CameraPosition);
-						camera.Target(final);
-						GoogleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
-				}
 
 				/// <summary>
 				/// Called when the google map is ready
@@ -137,6 +120,9 @@ namespace LocationTest.Views.Map
 
 						// disable gestures, since the containing map (Parent) handles all gestures
 						GoogleMap.UiSettings.SetAllGesturesEnabled(false);
+
+						// set animator
+						Animator = new GoogleMapAnimator(GoogleMap);
 				}
 
 				/// <summary>
@@ -144,11 +130,8 @@ namespace LocationTest.Views.Map
 				/// </summary>
 				public void Straighten()
 				{
-						CameraPosition.Builder camera = new CameraPosition.Builder(GoogleMap.CameraPosition);
-						camera.Bearing(0);
-						OnRotate?.Invoke(0);
-						// TODO: Create a custom googlemap animator
-						GoogleMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()), 200, null);
+						Animator.OnBearingAnimation += OnRotate;
+						Animator.AnimateBearing(0, 200);
 				}
 
 
