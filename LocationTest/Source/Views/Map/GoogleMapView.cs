@@ -24,6 +24,11 @@ namespace LocationTest.Views.Map
     public class GoogleMapView : SupportMapFragment, IOnMapReadyCallback, ValueAnimator.IAnimatorUpdateListener
     {
 
+				/// <summary>
+				/// Runs when the view has been fully created
+				/// </summary>
+				public event Action OnCreated;
+
 				private ValueAnimator Animation { get; set; }
 				private LatLng LocationBefore { get; set; }
 				private LatLng LocationAfter { get; set; }
@@ -38,6 +43,7 @@ namespace LocationTest.Views.Map
         public Map Parent { get; set; }
 
         // the location provider
+				// TODO: move LocationProvider to Map class
         public LocationTest.Support.LocationProvider LocationProvider { get; set; }
 
         /// <summary>
@@ -60,7 +66,7 @@ namespace LocationTest.Views.Map
             // start requesting location
             LocationProvider = new LocationTest.Support.LocationProvider(Parent.Activity);
             LocationProvider.OnLocationUpdate += OnLocationUpdate;
-            
+						
         }
 
         /// <summary>
@@ -86,7 +92,7 @@ namespace LocationTest.Views.Map
             transaction.Add(Parent.Id, this, "mapfragment");
             transaction.Commit();
             GetMapAsync(this);
-        }
+				}
 
         /// <summary>
         /// Called when the view has been created, use to edit the view's properties
@@ -98,8 +104,9 @@ namespace LocationTest.Views.Map
             // set width and height to match parent
             view.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
             view.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
-
-        }
+						
+						OnCreated?.Invoke();
+				}
 
         /// <summary>
         /// Called when the google map is ready
@@ -111,14 +118,14 @@ namespace LocationTest.Views.Map
 
             // disable gestures, since the containing map (Parent) handles all gestures
             GoogleMap.UiSettings.SetAllGesturesEnabled(false);
-        }
+				}
 
-        /// <summary>
-        /// Called when the location updates in the provider
-        /// </summary>
-        /// <param name="before"></param>
-        /// <param name="after"></param>
-        public void OnLocationUpdate(Location before, Location after)
+				/// <summary>
+				/// Called when the location updates in the provider
+				/// </summary>
+				/// <param name="before"></param>
+				/// <param name="after"></param>
+				public void OnLocationUpdate(Location before, Location after)
         {
 						if (before != null && after != null)
 						{

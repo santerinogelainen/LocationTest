@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using Android.App;
 using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.OS;
-using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Views;
-using Android.Widget;
 using LocationTest.Views.Support;
 using LocationTest.Support;
 using Android.Util;
@@ -26,6 +19,8 @@ namespace LocationTest.Views.Map
     public class Map : TouchableLayout
     {
 
+				public event Action<float> OnRotate;
+
         // the parent activity
         public FragmentActivity Activity { get; set; }
 
@@ -37,6 +32,9 @@ namespace LocationTest.Views.Map
 
         // view that contains the googlemap
         public GoogleMapView MapView { get; set; }
+
+				// map compass
+				public Compass Compass { get; set; }
 
         public Map(Context context) : base(context)
         {
@@ -52,20 +50,33 @@ namespace LocationTest.Views.Map
 
 				public void OnViewCreated()
         {
-						MapView = new GoogleMapView(this, Settings.GoogleMapOptions);
+						// init center point of this view
 						CenterPoint = new Vector2(Width / 2, Height / 2);
-            //D.WL(CenterPoint, this);
+
+						MapView = new GoogleMapView(this, Settings.GoogleMapOptions);
+						// add compass after the mapview has been created, so that the compass is on top of the mapview
+						MapView.OnCreated += AddCompass;
         }
+
+				/// <summary>
+				/// Add a compass to this layout
+				/// </summary>
+				public void AddCompass()
+				{
+						AddView(Compass = new Compass(this, Resource.Drawable.placeholder, Resource.Drawable.placeholder));
+				}
 
         public override void OnTouchStart(MotionEvent e)
         {
+						// set the bearing that we start with
             StartBearing = MapView.GoogleMap.CameraPosition.Bearing;
         }
 
         public override void OnTouchMove(MotionEvent e)
         {
             CameraPosition.Builder camera = new CameraPosition.Builder(MapView.GoogleMap.CameraPosition);
-            
+						float Bearing;
+
             // this is a bit complicated
 
             // if the currect touch position is on the bottom half of the screen
@@ -113,7 +124,7 @@ namespace LocationTest.Views.Map
                 }
 
 								// set the camera bearing
-								camera.Bearing(StartBearing - MinusBearing);
+								Bearing = StartBearing - MinusBearing;
 						}
 
 						// if the currect touch position is on the top half of the screen
@@ -161,8 +172,11 @@ namespace LocationTest.Views.Map
                 }
 
 								// set the camera bearing
-								camera.Bearing(StartBearing + PlusBearing);
+								Bearing = StartBearing + PlusBearing;
 						}
+
+						camera.Bearing(Bearing);
+						OnRotate?.Invoke(Bearing);
 
 						// finally set the camera of the google map
             MapView.GoogleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));

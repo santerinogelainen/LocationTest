@@ -110,6 +110,7 @@
     <Compile Include="Source\Support\BitmapImage.cs" />
     <Compile Include="Source\Support\Fonts.cs" />
     <Compile Include="Source\Support\ITouchable.cs" />
+    <Compile Include="Source\Views\Map\Compass.cs" />
     <Compile Include="Source\Views\UI\MenuButton.cs" />
     <Compile Include="Source\Views\Support\TouchableButton.cs" />
     <Compile Include="Source\Views\Support\TouchableImageButton.cs" />
