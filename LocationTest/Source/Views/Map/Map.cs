@@ -244,7 +244,7 @@ namespace LocationTest.Views.Map
 
 						camera.Bearing(Bearing);
 						OnRotate?.Invoke(Bearing);
-
+						
 						// finally set the camera of the google map
 						GoogleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(camera.Build()));
 				}

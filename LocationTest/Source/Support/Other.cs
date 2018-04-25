@@ -45,6 +45,8 @@ namespace LocationTest.Support
     /// </summary>
     public static class D
     {
+				public static DebugMessage[] Messages = new DebugMessage[100];
+
         /// <summary>
         /// WriteLine
         /// </summary>
@@ -69,9 +71,21 @@ namespace LocationTest.Support
 				/// <summary>
 				/// Write line on screen
 				/// </summary>
-				public static void WLS(Context context, Object text)
+				/// <param name="context">activity context</param>
+				/// <param name="text">text</param>
+				/// <param name="id">the id of the line, min 0, max 99</param>
+				public static void WLS(Context context, Object text, int id)
 				{
-						((Activity)context).FindViewById<TextView>(Resource.Id.debugmessages).Text = text.ToString();
+						if (Messages[id] != null)
+						{
+								Messages[id].Text = text.ToString();
+						} else
+						{
+								DebugMessage msg = new DebugMessage(context);
+								msg.Text = text.ToString();
+								Messages[id] = msg;
+								((Activity)context).FindViewById<LinearLayout>(Resource.Id.debuglayout).AddView(Messages[id]);
+						}
 				}
     }
 
@@ -85,6 +99,19 @@ namespace LocationTest.Support
 				public static LatLng ToLatLng(Location location)
 				{
 						return new LatLng(location.Latitude, location.Longitude);
+				}
+
+				/// <summary>
+				/// Convert a LatLng to a Location
+				/// </summary>
+				/// <param name="latLng"></param>
+				/// <returns></returns>
+				public static Location ToLocation(LatLng latLng)
+				{
+						Location l = new Location(LocationManager.GpsProvider);
+						l.Longitude = latLng.Longitude;
+						l.Latitude = latLng.Latitude;
+						return l;
 				}
 		}
 

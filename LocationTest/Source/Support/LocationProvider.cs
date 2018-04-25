@@ -43,10 +43,11 @@ namespace LocationTest.Support
 				public bool UserIsMoving { get; set; }
 
 				private int CurrentMovementCheckInterval { get; set; }
-				private double MetersMovedBetweenMovementChecks { get; set; }
+				private double FirstIterationLatitude { get; set; }
+				private double FirstIterationLongitude { get; set; }
 
-        // true if this class is requesting location
-        bool IsRequestingLocation { get; set; }
+				// true if this class is requesting location
+				bool IsRequestingLocation { get; set; }
 
         // the parent activity of the provider
         private Activity ParentActivity { get; set; }
@@ -103,30 +104,25 @@ namespace LocationTest.Support
             UpdateLocation(location);
         }
 
-				public void CheckMetersMoved(Location oldLocation, Location newLocation)
+				public void CheckUserMovement(Location newLocation)
 				{
-						if (oldLocation != null && newLocation != null)
+						if (newLocation != null)
 						{
-								MetersMovedBetweenMovementChecks += oldLocation.DistanceTo(newLocation);
-
-								if (CurrentMovementCheckInterval >= Settings.Location.MovementThresholdInterval)
+								if (CurrentMovementCheckInterval == 0)
 								{
-										//D.WL(String.Format("Between movement check intervals user has moved:"), this);
-										//D.WL(String.Format("{0}m of {1}m in {2}s", MetersMovedBetweenMovementChecks, Settings.Location.MovementThreshold, (Settings.Location.MovementThresholdInterval * Settings.Location.UpdateInterval) / 1000), this);
-										if (MetersMovedBetweenMovementChecks >= Settings.Location.MovementThreshold)
+										FirstIterationLatitude = newLocation.Latitude;
+										FirstIterationLongitude = newLocation.Longitude;
+								}
+
+								if (CurrentMovementCheckInterval == Settings.Location.MovementThresholdInterval)
+								{
+										// stupid hack because the garbage collection would dispose the objects location or latlng for somereason
+										float meters = Convert.ToLocation(new LatLng(FirstIterationLatitude, FirstIterationLongitude)).DistanceTo(newLocation);
+										if (meters >= Settings.Location.MovementThreshold)
 										{
 												UserIsMoving = true;
-												//D.WL(String.Format("This means that the user is moving."), this);
 										}
-										else
-										{
-												UserIsMoving = false;
-												//D.WL(String.Format("This means that the user is NOT moving."), this);
-										}
-
-										D.WLS(ParentActivity, String.Format("{0}m/{1}m in {2}s, Moving: {3}", MetersMovedBetweenMovementChecks, Settings.Location.MovementThreshold, (Settings.Location.MovementThresholdInterval * Settings.Location.UpdateInterval) / 1000, UserIsMoving));
-
-										MetersMovedBetweenMovementChecks = 0;
+										D.WLS(ParentActivity, String.Format("{0}m of {1}m radius in {2}s", meters, Settings.Location.MovementThreshold, (CurrentMovementCheckInterval * Settings.Location.UpdateInterval) / 1000), 1);
 										CurrentMovementCheckInterval = 0;
 								}
 								else
@@ -144,7 +140,7 @@ namespace LocationTest.Support
         {
             if (location != null)
             {
-								CheckMetersMoved(LastLocation, location);
+								CheckUserMovement(location);
 								OnLocationUpdate?.Invoke(LastLocation, location);
                 LastLocation = location;
             }
