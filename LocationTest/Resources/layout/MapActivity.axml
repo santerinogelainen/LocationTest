@@ -15,21 +15,21 @@
                 android:id="@+id/gold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="placeholder"
+                android:tag="gold16"
                 android:gravity="center"
                 android:paddingTop="40px" />
             <LocationTest.Views.UI.MoneyView
                 android:id="@+id/silver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="placeholder"
+                android:tag="silver16"
                 android:gravity="center"
                 android:paddingTop="40px" />
             <LocationTest.Views.UI.MoneyView
                 android:id="@+id/copper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="placeholder"
+                android:tag="copper16"
                 android:gravity="center"
                 android:paddingTop="40px" />
         </TableRow>

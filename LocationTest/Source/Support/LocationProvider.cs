@@ -141,6 +141,13 @@ namespace LocationTest.Support
             if (location != null)
             {
 								CheckUserMovement(location);
+
+								if (UserIsMoving)
+								{
+										MetersMoved += LastLocation.DistanceTo(location);
+										D.WLS(ParentActivity, MetersMoved, 2);
+								}
+
 								OnLocationUpdate?.Invoke(LastLocation, location);
                 LastLocation = location;
             }

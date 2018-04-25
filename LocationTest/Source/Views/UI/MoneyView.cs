@@ -59,7 +59,8 @@ namespace LocationTest.Views.UI
 								param.Gravity = GravityFlags.Left;
 								i.LayoutParameters = param;
 								int id = context.Resources.GetIdentifier((string)Tag, "drawable", context.PackageName);
-								i.SetImageResource(id);
+								Bitmap bmp = BitmapFactory.DecodeResource(context.Resources, id);
+								i.SetImageBitmap(Bitmap.CreateScaledBitmap(bmp, h, h, false));
 								AddView(i);
 						}
 						AddTextView(context);
