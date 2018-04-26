@@ -134,6 +134,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\PressStart2P-Regular.ttf" />
+    <AndroidAsset Include="Assets\gmap_options.json">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">

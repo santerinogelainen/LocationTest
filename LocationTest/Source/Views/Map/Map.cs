@@ -11,6 +11,8 @@ using Android.Util;
 using Android.Locations;
 using Android.Animation;
 using Android.Views.Animations;
+using System.IO;
+using Android.App;
 
 namespace LocationTest.Views.Map
 {
@@ -122,6 +124,14 @@ namespace LocationTest.Views.Map
 
 						// disable gestures, since the containing map (Parent) handles all gestures
 						GoogleMap.UiSettings.SetAllGesturesEnabled(false);
+
+						string json;
+						using (StreamReader reader = new StreamReader(Activity.Assets.Open("gmap_options.json")))
+						{
+								json = reader.ReadToEnd();
+						}
+
+						GoogleMap.SetMapStyle(new MapStyleOptions(json));
 
 						// set animator
 						Animator = new GoogleMapAnimator(GoogleMap);

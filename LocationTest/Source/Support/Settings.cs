@@ -32,7 +32,7 @@ namespace LocationTest.Support
         {
             public const int MaxZoom = 19;
             public const int MinZoom = 17;
-            public const int MapType = GoogleMap.MapTypeTerrain;
+            public const int MapType = GoogleMap.MapTypeNormal;
         }
 
 				public static GoogleMapOptions GoogleMapOptions =  new GoogleMapOptions()
