@@ -8,7 +8,9 @@
         android:layout_height="150px"
         android:layout_width="match_parent"
         android:stretchColumns="*"
-        android:background="@color/dark_gray">
+        android:background="@color/dark_gray"
+				android:paddingLeft="100px"
+				android:paddingRight="100px">
         <TableRow
             android:id="@+id/coins">
             <LocationTest.Views.UI.MoneyView

@@ -375,58 +375,70 @@ namespace LocationTest
 			public const int common_google_signin_btn_text_light_normal_background = 2130837522;
 			
 			// aapt resource value: 0x7f020013
-			public const int copper16 = 2130837523;
+			public const int compass = 2130837523;
 			
 			// aapt resource value: 0x7f020014
-			public const int gold16 = 2130837524;
+			public const int compass150 = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int googleg_disabled_color_18 = 2130837525;
+			public const int copper16 = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int googleg_standard_color_18 = 2130837526;
+			public const int gold16 = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int notification_action_background = 2130837527;
+			public const int googleg_disabled_color_18 = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int notification_bg = 2130837528;
+			public const int googleg_standard_color_18 = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int notification_bg_low = 2130837529;
+			public const int notification_action_background = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int notification_bg_low_normal = 2130837530;
+			public const int notification_bg = 2130837530;
 			
 			// aapt resource value: 0x7f02001b
-			public const int notification_bg_low_pressed = 2130837531;
+			public const int notification_bg_low = 2130837531;
 			
 			// aapt resource value: 0x7f02001c
-			public const int notification_bg_normal = 2130837532;
+			public const int notification_bg_low_normal = 2130837532;
 			
 			// aapt resource value: 0x7f02001d
-			public const int notification_bg_normal_pressed = 2130837533;
+			public const int notification_bg_low_pressed = 2130837533;
 			
 			// aapt resource value: 0x7f02001e
-			public const int notification_icon_background = 2130837534;
-			
-			// aapt resource value: 0x7f020023
-			public const int notification_template_icon_bg = 2130837539;
-			
-			// aapt resource value: 0x7f020024
-			public const int notification_template_icon_low_bg = 2130837540;
+			public const int notification_bg_normal = 2130837534;
 			
 			// aapt resource value: 0x7f02001f
-			public const int notification_tile_bg = 2130837535;
+			public const int notification_bg_normal_pressed = 2130837535;
 			
 			// aapt resource value: 0x7f020020
-			public const int notify_panel_notification_icon_bg = 2130837536;
+			public const int notification_icon_background = 2130837536;
+			
+			// aapt resource value: 0x7f020027
+			public const int notification_template_icon_bg = 2130837543;
+			
+			// aapt resource value: 0x7f020028
+			public const int notification_template_icon_low_bg = 2130837544;
 			
 			// aapt resource value: 0x7f020021
-			public const int placeholder = 2130837537;
+			public const int notification_tile_bg = 2130837537;
 			
 			// aapt resource value: 0x7f020022
-			public const int silver16 = 2130837538;
+			public const int notify_panel_notification_icon_bg = 2130837538;
+			
+			// aapt resource value: 0x7f020023
+			public const int placeholder = 2130837539;
+			
+			// aapt resource value: 0x7f020024
+			public const int pointer = 2130837540;
+			
+			// aapt resource value: 0x7f020025
+			public const int pointer150 = 2130837541;
+			
+			// aapt resource value: 0x7f020026
+			public const int silver16 = 2130837542;
 			
 			static Drawable()
 			{

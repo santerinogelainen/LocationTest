@@ -98,7 +98,7 @@ namespace LocationTest.Views.Map
 				/// </summary>
 				private void AddCompass()
 				{
-						AddView(Compass = new Compass(this, Resource.Drawable.placeholder, Resource.Drawable.placeholder));
+						AddView(Compass = new Compass(this, Resource.Drawable.compass150, Resource.Drawable.pointer150));
 				}
 
         public override void OnTouchStart(MotionEvent e)

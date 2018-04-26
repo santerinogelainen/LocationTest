@@ -20,7 +20,7 @@ namespace LocationTest.Views.UI
 				ImageView i { get; set; }
 				TextView t { get; set; }
 
-				int h = 70;
+				int h = 64;
 
 				public string Text {
 						get {
@@ -57,6 +57,7 @@ namespace LocationTest.Views.UI
 								i = new ImageView(context);
 								LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(h, h);
 								param.Gravity = GravityFlags.Left;
+								param.RightMargin = 10;
 								i.LayoutParameters = param;
 								int id = context.Resources.GetIdentifier((string)Tag, "drawable", context.PackageName);
 								Bitmap bmp = BitmapFactory.DecodeResource(context.Resources, id);
