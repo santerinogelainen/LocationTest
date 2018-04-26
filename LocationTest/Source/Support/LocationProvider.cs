@@ -36,6 +36,9 @@ namespace LocationTest.Support
         // the last location that was aqcuired
         Location LastLocation { get; set; }
 
+
+				public List<MeterEvent> MeterEvents { get; set; }
+
 				public bool LocationOverriden { get; set; }
 
 				public double MetersMoved { get; set; }
@@ -61,6 +64,7 @@ namespace LocationTest.Support
         {
             ParentActivity = parent;
             Client = LocationServices.GetFusedLocationProviderClient(ParentActivity);
+						MeterEvents = new List<MeterEvent>();
 
 						if (startrequesting)
             {
@@ -72,7 +76,7 @@ namespace LocationTest.Support
         /// <summary>
         /// Start requesting location updates. Access the last location acquired with the LastLocation property
         /// </summary>
-        async private void StartRequestingLocationUpdates()
+        async public void StartRequestingLocationUpdates()
         {
             LocationRequest request = new LocationRequest()
                 .SetPriority(LocationRequest.PriorityHighAccuracy)
@@ -86,7 +90,7 @@ namespace LocationTest.Support
         /// <summary>
         /// Stop requesting location updates.
         /// </summary>
-        async private void StopRequestingLocationUpdates()
+        async public void StopRequestingLocationUpdates()
         {
             if (IsRequestingLocation)
             {
@@ -132,6 +136,16 @@ namespace LocationTest.Support
 						}
 				}
 
+				/// <summary>
+				/// Do something every x meters
+				/// </summary>
+				/// <param name="meters"></param>
+				/// <param name="action"></param>
+				public void Every(int meters, Action action)
+				{
+						MeterEvents.Add(new MeterEvent(meters, action));
+				}
+
         /// <summary>
         /// Update the location
         /// </summary>
@@ -144,7 +158,12 @@ namespace LocationTest.Support
 
 								if (UserIsMoving)
 								{
-										MetersMoved += LastLocation.DistanceTo(location);
+										float moved = LastLocation.DistanceTo(location);
+										MetersMoved += moved;
+										foreach (MeterEvent e in MeterEvents)
+										{
+												e.RunAction(moved);
+										}
 										D.WLS(ParentActivity, MetersMoved, 2);
 								}
 

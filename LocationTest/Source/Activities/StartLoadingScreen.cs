@@ -40,7 +40,7 @@ namespace LocationTest.Activities
 								}
 								else
 								{
-										StartActivity(typeof(MapActivity));
+										StartActivity(typeof(Game));
 								}
 						}
         }
@@ -66,7 +66,7 @@ namespace LocationTest.Activities
         {
             if (CheckAllPermissions())
             {
-                StartActivity(typeof(MapActivity));
+                StartActivity(typeof(Game));
             }
         }
 				

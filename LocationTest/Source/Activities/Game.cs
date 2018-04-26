@@ -16,10 +16,10 @@ using Android.Graphics;
 namespace LocationTest.Activities
 {
     [Activity(Label = "MapActivity", Theme = "@android:style/Theme.Black.NoTitleBar")]
-    public class MapActivity : FragmentActivity
+    public class Game : FragmentActivity
     {
 
-        Map Map { get; set; }
+				Map Map { get; set; }
         Character Character { get; set; }
         HiddenMenu UpgradeMenu { get; set; }
 				MoneyView GoldView { get; set; }
@@ -31,10 +31,10 @@ namespace LocationTest.Activities
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.MapActivity);
 
-						InitViews();
+						LoadViews();
 				}
 
-				public void InitViews()
+				public void LoadViews()
 				{
 						Map = FindViewById<Map>(Resource.Id.map);
 						Character = FindViewById<Character>(Resource.Id.character);
@@ -42,8 +42,13 @@ namespace LocationTest.Activities
 						GoldView = FindViewById<MoneyView>(Resource.Id.gold);
 						SilverView = FindViewById<MoneyView>(Resource.Id.silver);
 						CopperView = FindViewById<MoneyView>(Resource.Id.copper);
+						
+						// every 50 meters add a copper
+						Map.LocationProvider.Every(50, () =>
+						{
+								CopperView.Add();
+						});
 				}
-
 
 				/// <summary>
 				/// Show a hiddenmenu

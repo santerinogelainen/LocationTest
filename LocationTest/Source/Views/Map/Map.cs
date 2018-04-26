@@ -22,6 +22,8 @@ namespace LocationTest.Views.Map
     public class Map : TouchableLayout, IOnMapReadyCallback
 		{
 
+				public event Action OnReady;
+
 				// animation values
 				private GoogleMapAnimator Animator { get; set; }
 
@@ -54,6 +56,7 @@ namespace LocationTest.Views.Map
 				public Map(Context context) : base(context)
         {
             Activity = (FragmentActivity)context;
+						LocationProvider = new LocationTest.Support.LocationProvider(Activity);
 
 						Post(OnViewCreated);
         }
@@ -76,7 +79,6 @@ namespace LocationTest.Views.Map
 				private void StartLocationUpdates()
 				{
 						// start requesting location
-						LocationProvider = new LocationTest.Support.LocationProvider(Activity);
 						LocationProvider.OnLocationUpdate += OnLocationUpdate;
 				}
 
@@ -87,7 +89,7 @@ namespace LocationTest.Views.Map
 				/// <param name="after">location after update</param>
 				public void OnLocationUpdate(Location before, Location after)
 				{
-						if (after != null)
+						if (after != null && Animator != null)
 						{
 								Animator.AnimateLocation(LocationTest.Support.Convert.ToLatLng(after), Settings.Location.UpdateInterval);
 						}
@@ -123,6 +125,7 @@ namespace LocationTest.Views.Map
 
 						// set animator
 						Animator = new GoogleMapAnimator(GoogleMap);
+						OnReady?.Invoke();
 				}
 
 				/// <summary>

@@ -15,10 +15,13 @@ using Android.Graphics;
 
 namespace LocationTest.Views.UI
 {
+		// TODO: cleanup moneyview class
 		public class MoneyView : LinearLayout
 		{
 				ImageView i { get; set; }
 				TextView t { get; set; }
+
+				int Count { get; set; } 
 
 				int h = 64;
 
@@ -29,6 +32,12 @@ namespace LocationTest.Views.UI
 						set {
 								t.Text = value;
 						}
+				}
+
+				public void Add(int amount = 1)
+				{
+						Count += amount;
+						Text = "" + Count;
 				}
 
 				public MoneyView(Context context) : base(context)
@@ -42,7 +51,7 @@ namespace LocationTest.Views.UI
 						LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
 						param.Gravity = GravityFlags.Left;
 						t.LayoutParameters = param;
-						t.Text = "0";
+						t.Text = "" + Count;
 						t.SetTypeface(Fonts.Pixel, TypefaceStyle.Normal);
 						t.SetTextColor(Color.White);
 						t.SetTextSize(ComplexUnitType.Px, h);
