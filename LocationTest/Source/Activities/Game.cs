@@ -12,6 +12,7 @@ using LocationTest.Views.Map;
 using Android.Animation;
 using Android.Locations;
 using Android.Graphics;
+using System;
 
 namespace LocationTest.Activities
 {
@@ -28,10 +29,15 @@ namespace LocationTest.Activities
 
 				protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.MapActivity);
-
-						LoadViews();
+						try
+						{
+								base.OnCreate(savedInstanceState);
+								SetContentView(Resource.Layout.MapActivity);
+								LoadViews();
+						} catch (Exception e)
+						{
+								new MessageBox(this, "Error: ", e.Message);
+						}
 				}
 
 				public void LoadViews()

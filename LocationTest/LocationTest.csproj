@@ -110,6 +110,7 @@
     <Compile Include="Source\Support\BitmapImage.cs" />
     <Compile Include="Source\Support\Fonts.cs" />
     <Compile Include="Source\Support\ITouchable.cs" />
+    <Compile Include="Source\Support\MessageBox.cs" />
     <Compile Include="Source\Support\MeterEvent.cs" />
     <Compile Include="Source\Views\Map\Compass.cs" />
     <Compile Include="Source\Views\Map\GoogleMapAnimator.cs" />

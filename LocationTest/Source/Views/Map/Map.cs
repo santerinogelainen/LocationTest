@@ -58,7 +58,7 @@ namespace LocationTest.Views.Map
 				public Map(Context context) : base(context)
         {
             Activity = (FragmentActivity)context;
-						LocationProvider = new LocationTest.Support.LocationProvider(Activity);
+						LocationProvider = new LocationTest.Support.LocationProvider(Activity, false);
 
 						Post(OnViewCreated);
         }
@@ -82,6 +82,7 @@ namespace LocationTest.Views.Map
 				{
 						// start requesting location
 						LocationProvider.OnLocationUpdate += OnLocationUpdate;
+						LocationProvider.StartRequestingLocationUpdates();
 				}
 
 				/// <summary>

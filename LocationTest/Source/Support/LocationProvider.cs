@@ -150,10 +150,11 @@ namespace LocationTest.Support
         /// Update the location
         /// </summary>
         /// <param name="location">new location</param>
-        public void UpdateLocation(Location location = null)
+        public void UpdateLocation(Location location)
         {
             if (location != null)
-            {
+						{
+								D.WLS(ParentActivity, "lon: " + location.Longitude + ", lat: " + location.Latitude, 4);
 								CheckUserMovement(location);
 
 								if (UserIsMoving)
