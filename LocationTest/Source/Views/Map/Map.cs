@@ -9,10 +9,8 @@ using LocationTest.Views.Support;
 using LocationTest.Support;
 using Android.Util;
 using Android.Locations;
-using Android.Animation;
-using Android.Views.Animations;
+using LocationTest.Support.Map;
 using System.IO;
-using Android.App;
 
 namespace LocationTest.Views.Map
 {
@@ -53,12 +51,12 @@ namespace LocationTest.Views.Map
 				public GoogleMap GoogleMap { get; set; }
 
 				// the location provider
-				public LocationTest.Support.LocationProvider LocationProvider { get; set; }
+				public LocationTest.Support.Map.LocationProvider LocationProvider { get; set; }
 
 				public Map(Context context) : base(context)
         {
             Activity = (FragmentActivity)context;
-						LocationProvider = new LocationTest.Support.LocationProvider(Activity, false);
+						LocationProvider = new LocationTest.Support.Map.LocationProvider(Activity, false);
 
 						Post(OnViewCreated);
         }
@@ -83,6 +81,14 @@ namespace LocationTest.Views.Map
 						// start requesting location
 						LocationProvider.OnLocationUpdate += OnLocationUpdate;
 						LocationProvider.StartRequestingLocationUpdates();
+
+						// debug
+						/*List < LatLng > list = new List<LatLng>();
+						list.Add(new LatLng(61.044643, 28.100023));
+						list.Add(new LatLng(61.043815, 28.102172));
+						list.Add(new LatLng(61.043950, 28.104712));
+						list.Add(new LatLng(61.042805, 28.105718));
+						LocationProvider.LoopBetween(list, Settings.Location.UpdateInterval);*/
 				}
 
 				/// <summary>

@@ -19,7 +19,7 @@ namespace LocationTest.Activities
     [Activity(Label = "StartLoadingScreen", MainLauncher = true)]
     public class StartLoadingScreen : Activity
     {
-
+				
         string[] AllPermissions { get; set; }
 				string GooglePlayError { get; set; }
 
@@ -27,11 +27,11 @@ namespace LocationTest.Activities
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.StartLoadingScreen);
-
 						if (!IsGooglePlayServicesInstalled())
 						{
 								// to do show no services screen
-						} else
+						}
+						else
 						{
 								AllPermissions = PermissionManager.GetRequestedPermissions();
 								if (!CheckAllPermissions())
@@ -43,7 +43,7 @@ namespace LocationTest.Activities
 										StartActivity(typeof(Game));
 								}
 						}
-        }
+				}
 
         public bool CheckAllPermissions()
         {

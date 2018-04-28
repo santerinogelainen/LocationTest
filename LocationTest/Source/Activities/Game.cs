@@ -17,7 +17,7 @@ using System;
 namespace LocationTest.Activities
 {
     [Activity(Label = "MapActivity", Theme = "@android:style/Theme.Black.NoTitleBar")]
-    public class Game : FragmentActivity
+    public class Game : FragmentActivity, Java.Lang.Thread.IUncaughtExceptionHandler
     {
 
 				Map Map { get; set; }
@@ -29,15 +29,9 @@ namespace LocationTest.Activities
 
 				protected override void OnCreate(Bundle savedInstanceState)
         {
-						try
-						{
-								base.OnCreate(savedInstanceState);
-								SetContentView(Resource.Layout.MapActivity);
-								LoadViews();
-						} catch (Exception e)
-						{
-								new MessageBox(this, "Error: ", e.Message);
-						}
+						base.OnCreate(savedInstanceState);
+						SetContentView(Resource.Layout.Game);
+						LoadViews();
 				}
 
 				public void LoadViews()
@@ -86,6 +80,10 @@ namespace LocationTest.Activities
 						}
 				}
 
+				public void UncaughtException(Java.Lang.Thread t, Java.Lang.Throwable e)
+				{
+						new MessageBox(this, "Error: ", e.Message);
+				}
 		}
 }
 

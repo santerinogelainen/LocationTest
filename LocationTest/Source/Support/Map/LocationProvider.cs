@@ -13,8 +13,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Java.Lang;
 
-namespace LocationTest.Support
+namespace LocationTest.Support.Map
 {
 
     /// <summary>
@@ -36,6 +37,8 @@ namespace LocationTest.Support
         // the last location that was aqcuired
         Location LastLocation { get; set; }
 
+				private LocationLooper Looper { get; set; }
+
 
 				public List<MeterEvent> MeterEvents { get; set; }
 
@@ -55,12 +58,14 @@ namespace LocationTest.Support
         // the parent activity of the provider
         private Activity ParentActivity { get; set; }
 
-        /// <summary>
-        /// Create the locationprovider
-        /// </summary>
-        /// <param name="parent">Parent activity of this provider</param>
-        /// <param name="startrequesting">default = true. set to false if you do not want it to start requesting updates</param>
-        public LocationProvider(Activity parent, bool startrequesting = true)
+				public bool InvokeRequired => throw new NotImplementedException();
+
+				/// <summary>
+				/// Create the locationprovider
+				/// </summary>
+				/// <param name="parent">Parent activity of this provider</param>
+				/// <param name="startrequesting">default = true. set to false if you do not want it to start requesting updates</param>
+				public LocationProvider(Activity parent, bool startrequesting = true)
         {
             ParentActivity = parent;
             Client = LocationServices.GetFusedLocationProviderClient(ParentActivity);
@@ -73,10 +78,10 @@ namespace LocationTest.Support
             }
         }
 
-        /// <summary>
-        /// Start requesting location updates. Access the last location acquired with the LastLocation property
-        /// </summary>
-        async public void StartRequestingLocationUpdates()
+				/// <summary>
+				/// Start requesting location updates. Access the last location acquired with the LastLocation property
+				/// </summary>
+				async public void StartRequestingLocationUpdates()
         {
             LocationRequest request = new LocationRequest()
                 .SetPriority(LocationRequest.PriorityHighAccuracy)
@@ -108,6 +113,21 @@ namespace LocationTest.Support
             UpdateLocation(location);
         }
 
+				/// <summary>
+				/// Loops between locations
+				/// </summary>
+				/// <param name="locations">list of locations</param>
+				/// <param name="ms">milliseconds between each loop</param>
+				public void LoopBetween(List<LatLng> locations, int ms)
+				{
+						Looper = new LocationLooper(this, locations, ms);
+						Looper.Start();
+				}
+
+				/// <summary>
+				/// Checks if the user is moving
+				/// </summary>
+				/// <param name="newLocation"></param>
 				public void CheckUserMovement(Location newLocation)
 				{
 						if (newLocation != null)
@@ -126,7 +146,7 @@ namespace LocationTest.Support
 										{
 												UserIsMoving = true;
 										}
-										D.WLS(ParentActivity, String.Format("{0}m of {1}m radius in {2}s", meters, Settings.Location.MovementThreshold, (CurrentMovementCheckInterval * Settings.Location.UpdateInterval) / 1000), 1);
+										D.WLS(ParentActivity, string.Format("{0}m of {1}m radius in {2}s", meters, Settings.Location.MovementThreshold, (CurrentMovementCheckInterval * Settings.Location.UpdateInterval) / 1000), 1);
 										CurrentMovementCheckInterval = 0;
 								}
 								else
@@ -198,6 +218,5 @@ namespace LocationTest.Support
                 UpdateLocation(location);
             }
         }
-
-    }
+		}
 }

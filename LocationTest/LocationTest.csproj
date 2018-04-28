@@ -110,17 +110,18 @@
     <Compile Include="Source\Support\BitmapImage.cs" />
     <Compile Include="Source\Support\Fonts.cs" />
     <Compile Include="Source\Support\ITouchable.cs" />
+    <Compile Include="Source\Support\Map\LocationLooper.cs" />
     <Compile Include="Source\Support\MessageBox.cs" />
-    <Compile Include="Source\Support\MeterEvent.cs" />
+    <Compile Include="Source\Support\Map\MeterEvent.cs" />
     <Compile Include="Source\Views\Map\Compass.cs" />
-    <Compile Include="Source\Views\Map\GoogleMapAnimator.cs" />
+    <Compile Include="Source\Support\Map\GoogleMapAnimator.cs" />
     <Compile Include="Source\Support\DebugMessage.cs" />
     <Compile Include="Source\Views\UI\MenuButton.cs" />
     <Compile Include="Source\Views\Support\TouchableButton.cs" />
     <Compile Include="Source\Views\Support\TouchableImageButton.cs" />
     <Compile Include="Source\Views\UI\Character.cs" />
     <Compile Include="Source\Support\Other.cs" />
-    <Compile Include="Source\Support\LocationProvider.cs" />
+    <Compile Include="Source\Support\Map\LocationProvider.cs" />
     <Compile Include="Source\Activities\Game.cs" />
     <Compile Include="Source\Views\Map\GoogleMapView.cs" />
     <Compile Include="Source\Views\Map\Map.cs" />
@@ -149,7 +150,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\MapActivity.axml">
+    <AndroidResource Include="Resources\layout\Game.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -187,6 +188,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\pointer150.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidEnvironment Include="environment.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

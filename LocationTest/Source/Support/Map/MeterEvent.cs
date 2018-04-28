@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace LocationTest.Support
+namespace LocationTest.Support.Map
 {
 		public class MeterEvent
 		{

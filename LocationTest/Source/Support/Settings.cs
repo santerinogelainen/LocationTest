@@ -20,12 +20,12 @@ namespace LocationTest.Support
 				public static class Location
 				{
 						// how many meters do we need to walk
-						public const int MovementThreshold = 30;
+						public const int MovementThreshold = 20;
 						// in this many intervals (one interval is UpdateInterval)
-						public const int MovementThresholdInterval = 6;
+						public const int MovementThresholdInterval = 8;
 						// before the game start counting them towards meters walked
 
-						public const int UpdateInterval = 5000;
+						public const int UpdateInterval = 4000;
 				}
 
         public static class Map

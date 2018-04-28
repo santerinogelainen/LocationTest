@@ -14,7 +14,7 @@ using Android.Views.Animations;
 using Android.Widget;
 using LocationTest.Support;
 
-namespace LocationTest.Views.Map
+namespace LocationTest.Support.Map
 {
 
 		public class MapValueAnimator : ValueAnimator, ValueAnimator.IAnimatorUpdateListener
@@ -40,7 +40,8 @@ namespace LocationTest.Views.Map
 
 				MapValueAnimator BearingAnimator { get; set; }
 				MapValueAnimator LocationAnimator { get; set; }
-				LatLng LocationTo { get; set; }
+				LatLng LocationAfter { get; set; }
+				LatLng LocationBefore { get; set; }
 				GoogleMap Map { get; set; }
 
 				public GoogleMapAnimator(GoogleMap map)
@@ -111,7 +112,8 @@ namespace LocationTest.Views.Map
 				public void AnimateLocation(LatLng to, int length = 1000)
 				{
 						StopLocationAnimation();
-						LocationTo = to;
+						LocationBefore = Map.CameraPosition.Target;
+						LocationAfter = to;
 						LocationAnimator.SetFloatValues((float)Map.CameraPosition.Target.Latitude, (float)to.Latitude);
 						LocationAnimator.SetDuration(length);
 						LocationAnimator.Start();
@@ -132,8 +134,7 @@ namespace LocationTest.Views.Map
 
 				public void LocationAnimation(ValueAnimator animation)
 				{
-						LatLng before = Map.CameraPosition.Target;
-						LatLng final = new LatLng(before.Latitude + animation.AnimatedFraction * (LocationTo.Latitude - before.Latitude), before.Longitude + animation.AnimatedFraction * (LocationTo.Longitude - before.Longitude));
+						LatLng final = new LatLng(LocationBefore.Latitude + LocationAnimator.AnimatedFraction * (LocationAfter.Latitude - LocationBefore.Latitude), LocationBefore.Longitude + LocationAnimator.AnimatedFraction * (LocationAfter.Longitude - LocationBefore.Longitude));
 
 						CameraPosition.Builder camera = new CameraPosition.Builder(Map.CameraPosition);
 						camera.Target(final);
