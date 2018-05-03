@@ -16,15 +16,16 @@ using Android.Animation;
 
 namespace LocationTest.Views.UI
 {
-    public class HiddenMenu : RelativeLayout, ValueAnimator.IAnimatorUpdateListener
+    public class HiddenMenu : LinearLayout, ValueAnimator.IAnimatorUpdateListener
 		{
-
 				ValueAnimator Animator { get; set; }
 
 				public HiddenMenu(Context context) : base(context)
         {
 						Animator = new ValueAnimator();
 						Animator.AddUpdateListener(this);
+
+						Orientation = Orientation.Vertical;
 
 						Post(OnViewCreated);
         }
@@ -42,6 +43,9 @@ namespace LocationTest.Views.UI
 						TranslationY = (int)animation.AnimatedValue;
 				}
 
+				/// <summary>
+				/// Shows the hiddenmenu
+				/// </summary>
 				public void Show()
 				{
 						Animator.Pause();
@@ -50,6 +54,9 @@ namespace LocationTest.Views.UI
 						Animator.Start();
 				}
 
+				/// <summary>
+				/// Hides the hiddenmenu
+				/// </summary>
 				public void Hide()
 				{
 						Animator.Pause();

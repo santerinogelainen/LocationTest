@@ -133,6 +133,7 @@
     <Compile Include="Source\Views\Support\TouchableLayout.cs" />
     <Compile Include="Source\Views\UI\HiddenMenu.cs" />
     <Compile Include="Source\Views\UI\MoneyView.cs" />
+    <Compile Include="Source\Views\UI\Upgrade.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\PressStart2P-Regular.ttf" />
@@ -194,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidEnvironment Include="environment.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Attrs.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

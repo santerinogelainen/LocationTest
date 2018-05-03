@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+							xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical">
@@ -9,8 +10,8 @@
         android:layout_width="match_parent"
         android:stretchColumns="*"
         android:background="@color/dark_gray"
-				android:paddingLeft="100px"
-				android:paddingRight="100px">
+        android:paddingLeft="100px"
+        android:paddingRight="100px">
         <TableRow
             android:id="@+id/coins">
             <LocationTest.Views.UI.MoneyView
@@ -67,7 +68,8 @@
             android:id="@+id/upgrademenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/dark_gray">
+            android:background="@color/dark_gray"
+						android:isScrollContainer="true">
         <!-- CLOSE -->
             <Button
                 android:id="@+id/closeupgrademenu"
@@ -78,15 +80,19 @@
                 android:text="Close"
                 android:tag="upgrademenu"
                 android:onClick="HideMenu" />
+						<LocationTest.Views.UI.UpgradeView
+							android:id="@+id/upgrade"
+							custom:src="@drawable/placeholder"
+							custom:title="Testing title"
+							android:layout_height="wrap_content"
+							android:layout_width="match_parent"/>
         </LocationTest.Views.UI.HiddenMenu>
     <!--DEBUGGGGG-->
         <LinearLayout
             android:id="@+id/debuglayout"
-						android:orientation="vertical"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/black">
-					
-        </LinearLayout>
+            android:background="@android:color/black" />
     </FrameLayout>
 </LinearLayout>
