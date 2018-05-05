@@ -107,7 +107,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\Support\AttributeReader.cs" />
     <Compile Include="Source\Support\BitmapImage.cs" />
+    <Compile Include="Source\Support\IHasValue.cs" />
     <Compile Include="Source\Support\Fonts.cs" />
     <Compile Include="Source\Support\ITouchable.cs" />
     <Compile Include="Source\Support\Map\LocationLooper.cs" />
@@ -133,7 +135,7 @@
     <Compile Include="Source\Views\Support\TouchableLayout.cs" />
     <Compile Include="Source\Views\UI\HiddenMenu.cs" />
     <Compile Include="Source\Views\UI\MoneyView.cs" />
-    <Compile Include="Source\Views\UI\Upgrade.cs" />
+    <Compile Include="Source\Views\UI\UpgradeView.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\PressStart2P-Regular.ttf" />
@@ -197,7 +199,9 @@
     <AndroidEnvironment Include="environment.txt" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\Attrs.xml" />
+    <AndroidResource Include="Resources\values\Attrs.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

@@ -18,21 +18,24 @@
                 android:id="@+id/gold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="gold16"
+								custom:size="50"
+                custom:src="@drawable/gold16"
                 android:gravity="center"
                 android:paddingTop="40px" />
             <LocationTest.Views.UI.MoneyView
                 android:id="@+id/silver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="silver16"
+								custom:size="50"
+                custom:src="@drawable/silver16"
                 android:gravity="center"
                 android:paddingTop="40px" />
             <LocationTest.Views.UI.MoneyView
                 android:id="@+id/copper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="copper16"
+								custom:size="50"
+                custom:src="@drawable/copper16"
                 android:gravity="center"
                 android:paddingTop="40px" />
         </TableRow>
@@ -85,7 +88,8 @@
 							custom:src="@drawable/placeholder"
 							custom:title="Testing title"
 							android:layout_height="wrap_content"
-							android:layout_width="match_parent"/>
+							android:layout_width="match_parent"
+							custom:copper_cost="10"/>
         </LocationTest.Views.UI.HiddenMenu>
     <!--DEBUGGGGG-->
         <LinearLayout

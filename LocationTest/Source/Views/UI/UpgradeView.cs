@@ -16,16 +16,22 @@ using LocationTest.Support;
 
 namespace LocationTest.Views.UI
 {
-		public class UpgradeView : FrameLayout, View.IOnClickListener
+		public class UpgradeView : FrameLayout, View.IOnClickListener, IHasValue
 		{
-
+				/// <summary>
+				/// Runs when this upgrade is upgraded
+				/// </summary>
 				public event Action<int> OnUpgrade;
 
-				public static int ImageSize = 200;
+				public static int ImageSize = 150;
 				private TextView CountView { get; set; }
 				public int Count { get; set; }
 
-				public int Padding = 20;
+				public MoneyView Gold { get; set; }
+				public MoneyView Silver { get; set; }
+				public MoneyView Copper { get; set; }
+
+				public readonly int Padding = 20;
 
 				public FrameLayout.LayoutParams Style {
 						get {
@@ -36,23 +42,20 @@ namespace LocationTest.Views.UI
 
 				public UpgradeView(Context context, IAttributeSet attrs) : base(context, attrs) {
 						Init();
-						TypedArray a = context.Theme.ObtainStyledAttributes(attrs, Resource.Styleable.UpgradeView, 0, 0);
+						AttributeReader attributes = new AttributeReader(context, Resource.Styleable.UpgradeView, attrs);
 
 						// set icon
-						if (a.HasValue(Resource.Styleable.UpgradeView_src))
-						{
-								int i = a.GetResourceId(Resource.Styleable.UpgradeView_src, -1);
-								SetImage(i);
-						}
+						SetImage(attributes.GetResourceId(Resource.Styleable.UpgradeView_src));
 
 						// set title
-						if (a.HasValue(Resource.Styleable.UpgradeView_title))
-						{
-								string s = a.GetString(Resource.Styleable.UpgradeView_title);
-								SetTitle(s);
-						}
+						SetTitle(attributes.GetString(Resource.Styleable.UpgradeView_title));
+						
+						// set gold, silver and copper 
+						Gold = new MoneyView(context, Resource.Drawable.gold16, attributes.GetInteger(Resource.Styleable.UpgradeView_gold_cost, 0));
+						Silver = new MoneyView(context, Resource.Drawable.silver16, attributes.GetInteger(Resource.Styleable.UpgradeView_silver_cost, 0));
+						Copper = new MoneyView(context, Resource.Drawable.copper16, attributes.GetInteger(Resource.Styleable.UpgradeView_copper_cost, 0));
 
-						a.Recycle();
+						AddMoney(Gold, Silver, Copper);
 				}
 				public UpgradeView(Context context, IAttributeSet attrs, int defStyle) : this(context, attrs) { }
 				
@@ -61,6 +64,9 @@ namespace LocationTest.Views.UI
 						Init();
 				}
 
+				/// <summary>
+				/// Initializes this ugrade. Should be called one in every constructor before everything else
+				/// </summary>
 				public void Init()
 				{
 						LayoutParameters = Style;
@@ -75,14 +81,39 @@ namespace LocationTest.Views.UI
 						CountView.SetTypeface(Fonts.Pixel, TypefaceStyle.Normal);
 						FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(LayoutParams.WrapContent, ImageSize);
 						param.Gravity = GravityFlags.Right;
-						param.SetMargins(0, 25, 0, 0);
 						CountView.LayoutParameters = param;
 						AddView(CountView);
 						
 						SetOnClickListener(this);
 				}
 
-				public void SetImage(int resID)
+				/// <summary>
+				/// Adds the money views to this layout
+				/// </summary>
+				/// <param name="gold">gold view</param>
+				/// <param name="silver">silver view</param>
+				/// <param name="copper">copper view</param>
+				private void AddMoney(MoneyView gold, MoneyView silver, MoneyView copper)
+				{
+						TableLayout table = new TableLayout(Context);
+						TableRow moneyLayout = new TableRow(Context);
+						moneyLayout.AddView(gold);
+						moneyLayout.AddView(silver);
+						moneyLayout.AddView(copper);
+						table.AddView(moneyLayout);
+						FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
+						param.SetMargins(ImageSize, 0, 0, 0);
+						param.Gravity = GravityFlags.Bottom;
+						table.LayoutParameters = param;
+						table.SetPadding(Padding, 0, 0, 0);
+						AddView(table);
+				}
+
+				/// <summary>
+				/// Sets the image for this upgrade view
+				/// </summary>
+				/// <param name="resID">resource id</param>
+				private void SetImage(int resID)
 				{
 						// create view
 						ImageView image = new ImageView(Context);
@@ -102,20 +133,19 @@ namespace LocationTest.Views.UI
 				/// Sets the title for this view
 				/// </summary>
 				/// <param name="title">title as a string</param>
-				public void SetTitle(string title)
+				private void SetTitle(string title)
 				{
 						// init view
 						TextView text = new TextView(Context);
 						text.Text = title;
 						text.TextSize = 15;
 						text.SetPadding(Padding, 0, 0, 0);
-						text.Gravity = GravityFlags.CenterVertical;
 						text.SetTypeface(Fonts.Pixel, TypefaceStyle.Normal);
 						text.SetTextColor(Color.White);
 
 						// set layoutparams
 						FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(LayoutParams.WrapContent, ImageSize);
-						param.SetMargins(ImageSize, 15, 0, 0);
+						param.SetMargins(ImageSize, 0, 0, 0);
 						text.LayoutParameters = param;
 
 						AddView(text);

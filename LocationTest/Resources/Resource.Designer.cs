@@ -64,6 +64,12 @@ namespace LocationTest
 			// aapt resource value: 0x7f01001b
 			public const int colorScheme = 2130771995;
 			
+			// aapt resource value: 0x7f01002a
+			public const int copper_cost = 2130772010;
+			
+			// aapt resource value: 0x7f01002b
+			public const int count = 2130772011;
+			
 			// aapt resource value: 0x7f010024
 			public const int font = 2130772004;
 			
@@ -91,6 +97,9 @@ namespace LocationTest
 			// aapt resource value: 0x7f010025
 			public const int fontWeight = 2130772005;
 			
+			// aapt resource value: 0x7f010028
+			public const int gold_cost = 2130772008;
+			
 			// aapt resource value: 0x7f010018
 			public const int imageAspectRatio = 2130771992;
 			
@@ -117,6 +126,12 @@ namespace LocationTest
 			
 			// aapt resource value: 0x7f01001c
 			public const int scopeUris = 2130771996;
+			
+			// aapt resource value: 0x7f010029
+			public const int silver_cost = 2130772009;
+			
+			// aapt resource value: 0x7f01002c
+			public const int size = 2130772012;
 			
 			// aapt resource value: 0x7f010026
 			public const int src = 2130772006;
@@ -1008,6 +1023,20 @@ namespace LocationTest
 			// aapt resource value: 14
 			public const int MapAttrs_zOrderOnTop = 14;
 			
+			public static int[] MoneyView = new int[] {
+					2130772006,
+					2130772011,
+					2130772012};
+			
+			// aapt resource value: 1
+			public const int MoneyView_count = 1;
+			
+			// aapt resource value: 2
+			public const int MoneyView_size = 2;
+			
+			// aapt resource value: 0
+			public const int MoneyView_src = 0;
+			
 			public static int[] SignInButton = new int[] {
 					2130771994,
 					2130771995,
@@ -1024,7 +1053,19 @@ namespace LocationTest
 			
 			public static int[] UpgradeView = new int[] {
 					2130772006,
-					2130772007};
+					2130772007,
+					2130772008,
+					2130772009,
+					2130772010};
+			
+			// aapt resource value: 4
+			public const int UpgradeView_copper_cost = 4;
+			
+			// aapt resource value: 2
+			public const int UpgradeView_gold_cost = 2;
+			
+			// aapt resource value: 3
+			public const int UpgradeView_silver_cost = 3;
 			
 			// aapt resource value: 0
 			public const int UpgradeView_src = 0;

@@ -3,5 +3,14 @@
 	<declare-styleable name="UpgradeView">
 		<attr name="src" format="reference"/>
 		<attr name="title" format="string"/>
+		<attr name="gold_cost" format="integer"/>
+		<attr name="silver_cost" format="integer"/>
+		<attr name="copper_cost" format="integer"/>
+	</declare-styleable>
+
+	<declare-styleable name="MoneyView">
+		<attr name="src" format="reference"/>
+		<attr name="count" format="integer"/>
+		<attr name="size" format="integer"/>
 	</declare-styleable>
 </resources>
